@@ -28,7 +28,11 @@ header.top .wrap { display: flex; justify-content: space-between; align-items: c
 .btn-o { background: var(--orange); color: #FFFFFF; }
 .btn-l { background: transparent; color: var(--teal); border: 2px solid var(--teal); }
 .hero { background: var(--teal); color: #FFFFFF; }
-.hero .wrap { padding-block: 48px; display: grid; gap: 16px; }
+.hero .wrap { padding-block: 48px; display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr); gap: 36px; align-items: center; }
+.hero-txt { display: grid; gap: 16px; }
+.hero-img { width: 100%; max-width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 22px; display: block; background: var(--teal-d); }
+@media (max-width: 760px) { .hero .wrap { grid-template-columns: minmax(0, 1fr); } .hero-img { aspect-ratio: 16 / 10; } }
+.faixa { width: 100%; max-width: 100%; aspect-ratio: 21 / 8; object-fit: cover; border-radius: 22px; display: block; margin-top: 24px; background: var(--soft); }
 .hero h1 { font-size: clamp(34px, 6vw, 58px); font-weight: 800; max-width: 16ch; }
 .hero p { color: var(--mint); font-size: 19px; max-width: 46ch; }
 .hero .acts { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 8px; }
@@ -77,10 +81,13 @@ footer .wrap { padding-block: 28px; display: flex; flex-wrap: wrap; justify-cont
 
 <section class="hero">
   <div class="wrap">
+    <div class="hero-txt">
     <h1>Eletricista de confiança, no horário combinado.</h1>
     <p>Instalações, reparos e manutenção para casas e pequenos comércios. Orçamento sem compromisso pelo WhatsApp.</p>
     <div class="acts"><a class="btn btn-o" href="#orcamento">Pedir orçamento</a><a class="btn btn-l" href="#servicos">Ver serviços</a></div>
     <div class="selos"><span>Atendo a cidade toda e região</span><span>Segunda a sábado</span><span>Garantia de 90 dias no serviço</span></div>
+    </div>
+    <img class="hero-img" src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=800&q=70" alt="Eletricista com capacete amarelo instalando fiação">
   </div>
 </section>
 
@@ -106,6 +113,7 @@ footer .wrap { padding-block: 28px; display: flex; flex-wrap: wrap; justify-cont
       <li><h3>Receba o orçamento</h3><p>Valor e horário combinados antes de qualquer serviço.</p></li>
       <li><h3>Serviço feito</h3><p>No dia marcado, com material de qualidade e local limpo no final.</p></li>
     </ol>
+    <img class="faixa" src="https://images.unsplash.com/photo-1544724569-5f546fd6f2b5?auto=format&fit=crop&w=1200&q=70" alt="Quadro de disjuntores com fiação organizada" loading="lazy">
   </section>
 
   <section class="block" id="orcamento">
@@ -134,7 +142,7 @@ footer .wrap { padding-block: 28px; display: flex; flex-wrap: wrap; justify-cont
   </section>
 </main>
 
-<footer><div class="wrap"><span>Fio Certo Elétrica · Segunda a sábado, 7h às 18h</span><span>Negócio fictício, criado para mostrar o modelo.</span></div></footer>
+<footer><div class="wrap"><span>Fio Certo Elétrica · Segunda a sábado, 7h às 18h</span><span>Negócio fictício, criado para mostrar o modelo. Fotos: Unsplash.</span></div></footer>
 <a class="zap" href="https://wa.me/?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20preciso%20de%20um%20eletricista." target="_blank" rel="noopener" aria-label="Falar no WhatsApp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 0 1-13.4 7.9L3 21l1.2-4.4A9 9 0 1 1 21 12z"/></svg></a>
 
 <script>

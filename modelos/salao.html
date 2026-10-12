@@ -34,9 +34,7 @@ nav.links a { color: var(--ink); text-decoration: none; }
 .hero h1 em { font-style: italic; color: var(--rose-d); }
 .hero p { margin-top: 16px; color: var(--muted); max-width: 40ch; font-size: 19px; }
 .hero .cta { margin-top: 24px; }
-.arch { aspect-ratio: 4 / 5; max-width: 100%; border-radius: 200px 200px 24px 24px; background: var(--rose); position: relative; overflow: hidden; }
-.arch::before { content: ""; position: absolute; width: 70%; aspect-ratio: 1; border-radius: 50%; background: var(--sage); left: 15%; bottom: -20%; }
-.arch::after { content: ""; position: absolute; width: 34%; aspect-ratio: 1; border-radius: 50%; background: var(--bg); left: 33%; top: 22%; }
+.arch { aspect-ratio: 4 / 5; width: 100%; max-width: 100%; border-radius: 200px 200px 24px 24px; background: var(--rose); object-fit: cover; display: block; border: 8px solid var(--rose); }
 section.block { padding-block: 48px; }
 .block h2 { font-size: clamp(30px, 4vw, 42px); color: var(--sage); margin-bottom: 24px; }
 .servs { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 16px; }
@@ -50,9 +48,7 @@ section.block { padding-block: 48px; }
 .ini { width: 60px; height: 60px; border-radius: 50%; background: var(--sage); color: #FFFFFF; display: grid; place-items: center; font-family: "Fraunces", serif; font-size: 22px; flex-shrink: 0; }
 .pessoa small { color: var(--muted); display: block; }
 .gal { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
-.gal div { aspect-ratio: 1; border-radius: 18px; display: grid; place-items: center; color: var(--muted); font-size: 14px; text-align: center; padding: 10px; }
-.gal div:nth-child(odd) { background: var(--rose); color: #5A2E28; }
-.gal div:nth-child(even) { background: var(--sage-l); }
+.gal img { aspect-ratio: 1; width: 100%; max-width: 100%; border-radius: 18px; object-fit: cover; display: block; background: var(--sage-l); }
 .agenda { background: var(--sage); color: #FFFFFF; border-radius: 28px; padding: clamp(22px, 4vw, 44px); display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 32px; }
 @media (max-width: 760px) { .agenda { grid-template-columns: minmax(0, 1fr); } }
 .agenda h2 { color: #FFFFFF; }
@@ -85,7 +81,7 @@ footer { padding-block: 32px; color: var(--muted); font-size: 15px; display: fle
       <p>Cabelo, unhas e sobrancelhas com hora marcada, sem fila e sem pressa. Escolha o serviço e peça seu horário pelo WhatsApp.</p>
       <a class="cta" href="#agendar">Pedir meu horário</a>
     </div>
-    <div class="arch" aria-hidden="true"></div>
+    <img class="arch" src="https://images.unsplash.com/photo-1580618672591-eb180b1a973f?auto=format&fit=crop&w=800&q=70" alt="Cabeleireira fazendo escova com secador em uma cliente">
   </section>
 
   <section class="block" id="servicos">
@@ -104,7 +100,7 @@ footer { padding-block: 32px; color: var(--muted); font-size: 15px; display: fle
 
   <section class="block" aria-label="Galeria">
     <h2>Nossos trabalhos</h2>
-    <div class="gal"><div>Foto do seu trabalho</div><div>Foto do seu trabalho</div><div>Foto do seu trabalho</div><div>Foto do seu trabalho</div><div>Foto do seu trabalho</div><div>Foto do seu trabalho</div></div>
+    <div class="gal"><img src="https://images.unsplash.com/photo-1634449571010-02389ed0f9b0?auto=format&fit=crop&w=500&q=70" alt="Cabeleireira cortando o cabelo de uma cliente" loading="lazy"><img src="https://images.unsplash.com/photo-1632345031435-8727f6897d53?auto=format&fit=crop&w=500&q=70" alt="Cliente fazendo as unhas na manicure" loading="lazy"><img src="https://images.unsplash.com/photo-1600948836101-f9ffda59d250?auto=format&fit=crop&w=500&q=70" alt="Cadeiras de salão em frente a espelhos redondos" loading="lazy"><img src="https://images.unsplash.com/photo-1610992015762-45dca7fa3a85?auto=format&fit=crop&w=500&q=70" alt="Mão com unhas pintadas de rosa claro" loading="lazy"><img src="https://images.unsplash.com/photo-1564278692313-b2d65996fc93?auto=format&fit=crop&w=500&q=70" alt="Detalhe de sobrancelha e cílios" loading="lazy"><img src="https://images.unsplash.com/photo-1595475884562-073c30d45670?auto=format&fit=crop&w=500&q=70" alt="Escovas, tesoura e pincel de coloração" loading="lazy"></div>
   </section>
 
   <section class="block" id="agendar">
@@ -129,7 +125,7 @@ footer { padding-block: 32px; color: var(--muted); font-size: 15px; display: fle
   </section>
 </main>
 
-<footer class="wrap"><span>Rua das Acácias, 45 · Terça a sábado, 9h às 20h</span><span>Studio Lírio é um negócio fictício, criado para mostrar o modelo.</span></footer>
+<footer class="wrap"><span>Rua das Acácias, 45 · Terça a sábado, 9h às 20h</span><span>Studio Lírio é um negócio fictício, criado para mostrar o modelo. Fotos: Unsplash.</span></footer>
 
 <script>
 const SERVICOS = [

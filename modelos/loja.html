@@ -29,7 +29,9 @@ header.top { background: var(--navy); color: #FFFFFF; }
 .search input { width: 100%; min-height: 44px; border-radius: 10px; border: 0; padding: 0 14px; color: var(--ink); }
 .strip { background: var(--mus); color: var(--navy); font-weight: 500; font-size: 14px; }
 .strip .wrap { display: flex; flex-wrap: wrap; gap: 6px 28px; justify-content: center; padding-block: 8px; }
-.hero { padding-block: 36px 20px; display: grid; gap: 10px; }
+.hero { padding-block: 32px 12px; display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); gap: 28px; align-items: center; }
+.hero-img { width: 100%; max-width: 100%; aspect-ratio: 16 / 10; object-fit: cover; border-radius: 20px; display: block; background: var(--line); }
+@media (max-width: 720px) { .hero { grid-template-columns: minmax(0, 1fr); } }
 .hero h1 { font-size: clamp(30px, 5vw, 50px); font-weight: 800; letter-spacing: -0.02em; max-width: 18ch; }
 .hero p { color: var(--muted); font-size: 18px; max-width: 48ch; }
 .chips { display: flex; gap: 8px; overflow-x: auto; padding-block: 16px; }
@@ -38,7 +40,8 @@ header.top { background: var(--navy); color: #FFFFFF; }
 .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr)); gap: 16px; padding-bottom: 48px; }
 .prod { background: var(--card); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; }
 .foto { aspect-ratio: 1; max-width: 100%; display: grid; place-items: center; position: relative; }
-.foto svg { width: 54%; height: auto; }
+.foto img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+.foto .tag { z-index: 1; }
 .tag { position: absolute; top: 10px; left: 10px; background: var(--navy); color: #FFFFFF; font-size: 12px; padding: 3px 9px; border-radius: 6px; }
 .body { padding: 14px 16px 16px; display: grid; gap: 10px; }
 .body h3 { font-size: 17px; font-weight: 600; }
@@ -66,13 +69,16 @@ footer { border-top: 1px solid var(--line); padding-block: 24px; color: var(--mu
 
 <main class="wrap">
   <section class="hero">
+    <div style="display:grid;gap:10px">
     <h1>Crochê feito com calma, para durar anos.</h1>
     <p>Escolha a peça, a cor e o tamanho. O pedido chega no nosso WhatsApp e a gente combina a entrega com você.</p>
+    </div>
+    <img class="hero-img" src="https://images.unsplash.com/photo-1648005539099-709d5be525fb?auto=format&fit=crop&w=900&q=70" alt="Novelos de lã e agulha de crochê sobre uma manta">
   </section>
   <div class="chips" id="chips" role="group" aria-label="Categorias"></div>
   <div class="grid" id="grid"></div>
 </main>
-<footer>Ponto Firme Ateliê é um negócio fictício, criado para mostrar o modelo.</footer>
+<footer>Ponto Firme Ateliê é um negócio fictício, criado para mostrar o modelo. Fotos: Unsplash.</footer>
 
 <script>
 const ICON = {
@@ -82,14 +88,14 @@ const ICON = {
   touca: '<path d="M28 74c0-28 14-44 32-44s32 16 32 44z" fill="currentColor"/><rect x="24" y="72" width="72" height="14" rx="5" fill="currentColor" opacity=".75"/><circle cx="60" cy="26" r="9" fill="currentColor"/>'
 };
 const PRODUTOS = [
-  { n: 'Bolsa de ombro Trama', cat: 'Bolsas', i: 'bolsa', p: 129, cores: ['#C9643B', '#2F4A6E', '#D8C3A5'], tam: ['Única'], tag: 'Mais vendida' },
-  { n: 'Bolsa de praia Sol', cat: 'Bolsas', i: 'bolsa', p: 99, cores: ['#E3A72F', '#3F7D6E'], tam: ['Média', 'Grande'] },
-  { n: 'Blusa cropped Brisa', cat: 'Roupas', i: 'blusa', p: 89, cores: ['#F2F0EA', '#B44A5C', '#4A6FA5'], tam: ['P', 'M', 'G'] },
-  { n: 'Colete Ponto Arroz', cat: 'Roupas', i: 'blusa', p: 119, cores: ['#7A5C43', '#2B2B2B'], tam: ['P', 'M', 'G', 'GG'], tag: 'Novo' },
-  { n: 'Tapete redondo Mandala', cat: 'Casa', i: 'tapete', p: 149, cores: ['#D8C3A5', '#3F7D6E', '#C9643B'], tam: ['60 cm', '80 cm', '1 m'] },
-  { n: 'Sousplat Flor', cat: 'Casa', i: 'tapete', p: 39, cores: ['#E3A72F', '#F2F0EA'], tam: ['Unidade', 'Kit com 6'] },
-  { n: 'Touca Pompom', cat: 'Acessórios', i: 'touca', p: 49, cores: ['#B44A5C', '#4A6FA5', '#2B2B2B'], tam: ['Infantil', 'Adulto'] },
-  { n: 'Touca Canelada', cat: 'Acessórios', i: 'touca', p: 55, cores: ['#7A5C43', '#3F7D6E'], tam: ['Adulto'] }
+  { n: 'Bolsa de ombro Trama', foto: '1565592284032-d3c08f2a53e9', cat: 'Bolsas', i: 'bolsa', p: 129, cores: ['#C9643B', '#2F4A6E', '#D8C3A5'], tam: ['Única'], tag: 'Mais vendida' },
+  { n: 'Bolsa de praia Sol', foto: '1594638963668-52eb9798e8ca', cat: 'Bolsas', i: 'bolsa', p: 99, cores: ['#E3A72F', '#3F7D6E'], tam: ['Média', 'Grande'] },
+  { n: 'Blusa cropped Brisa', foto: '1789110520784-3845cb0d0694', cat: 'Roupas', i: 'blusa', p: 89, cores: ['#F2F0EA', '#B44A5C', '#4A6FA5'], tam: ['P', 'M', 'G'] },
+  { n: 'Colete Ponto Arroz', foto: '1782929089798-261f17a0b668', cat: 'Roupas', i: 'blusa', p: 119, cores: ['#7A5C43', '#2B2B2B'], tam: ['P', 'M', 'G', 'GG'], tag: 'Novo' },
+  { n: 'Tapete redondo Mandala', foto: '1543334270-24bb46642afe', cat: 'Casa', i: 'tapete', p: 149, cores: ['#D8C3A5', '#3F7D6E', '#C9643B'], tam: ['60 cm', '80 cm', '1 m'] },
+  { n: 'Sousplat Flor', foto: '1700171518313-5dd219beaaa6', cat: 'Casa', i: 'tapete', p: 39, cores: ['#E3A72F', '#F2F0EA'], tam: ['Unidade', 'Kit com 6'] },
+  { n: 'Touca Pompom', foto: '1576529598261-96e376f6aabb', cat: 'Acessórios', i: 'touca', p: 49, cores: ['#B44A5C', '#4A6FA5', '#2B2B2B'], tam: ['Infantil', 'Adulto'] },
+  { n: 'Touca Canelada', foto: '1544967919-44c1ef2f9e7a', cat: 'Acessórios', i: 'touca', p: 55, cores: ['#7A5C43', '#3F7D6E'], tam: ['Adulto'] }
 ];
 const brl = (n) => n.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 0 });
 const norm = (s) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
@@ -108,8 +114,8 @@ function render() {
   const lista = PRODUTOS.map((p, k) => [p, k]).filter(([p]) => (cat === 'Todos' || p.cat === cat) && (!termo || norm(p.n + ' ' + p.cat).includes(norm(termo))));
   document.getElementById('grid').innerHTML = lista.length ? lista.map(([p, k]) => {
     const e = escolha[k];
-    return '<article class="prod"><div class="foto" style="background:' + p.cores[e.cor] + '22;color:' + p.cores[e.cor] + '">' +
-      (p.tag ? '<span class="tag">' + p.tag + '</span>' : '') + '<svg viewBox="0 0 120 120" aria-hidden="true">' + ICON[p.i] + '</svg></div>' +
+    return '<article class="prod"><div class="foto" style="background:' + p.cores[e.cor] + '22">' +
+      (p.tag ? '<span class="tag">' + p.tag + '</span>' : '') + '<img src="https://images.unsplash.com/photo-' + p.foto + '?auto=format&fit=crop&w=500&h=500&q=70" alt="' + p.n + '" loading="lazy"></div>' +
       '<div class="body"><h3>' + p.n + '</h3><div class="preco">' + brl(p.p) + '<small>ou ' + brl(Math.round(p.p * 0.95)) + ' no Pix</small></div>' +
       '<div class="cores" role="group" aria-label="Cor">' + p.cores.map((c, ci) => '<button class="cor" type="button" style="background:' + c + '" aria-label="' + NOMES_COR[c] + '" aria-pressed="' + (ci === e.cor) + '" data-k="' + k + '" data-cor="' + ci + '"></button>').join('') + '</div>' +
       '<label class="sr" for="tam-' + k + '" hidden>Tamanho</label><select id="tam-' + k + '" data-k="' + k + '" aria-label="Tamanho">' + p.tam.map((t, ti) => '<option value="' + ti + '"' + (ti === e.tam ? ' selected' : '') + '>' + t + '</option>').join('') + '</select>' +
