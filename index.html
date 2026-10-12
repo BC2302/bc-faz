@@ -1,0 +1,485 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="BC Faz: logo, cardápio digital, posts e planilhas para quem está começando um negócio. Você vende, a BC faz.">
+<style>html{color-scheme:light}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>BC Faz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Figtree:wght@400;500;600&display=swap">
+<style>
+/* Layout: loja online. Barra preta com busca, faixa amarela de categorias, banner, vitrine em grade e página de cada serviço */
+:root {
+  --bg: #F3F0E7;
+  --surface: #FFFFFF;
+  --surface-2: #F1EBDA;
+  --ink: #1A1A1A;
+  --muted: #5A564B;
+  --line: #E2DBC8;
+  --accent: #FFC629;
+  --accent-ink: #1A1A1A;
+  --hdr: #1A1A1A;
+  --ok: #1B7A47;
+  --brand: #1A1A1A;
+  --brand-ink: #FFFFFF;
+  --check: #FFC629;
+  --logo-bc: #1A1A1A;
+  --logo-faz: #4A473F;
+  --logo-ring: transparent;
+  --shadow: 0 1px 2px rgba(26, 26, 26, 0.06), 0 8px 24px -12px rgba(26, 26, 26, 0.18);
+  --font-display: "Bricolage Grotesque", "Arial Rounded MT Bold", system-ui, sans-serif;
+  --font-body: "Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --radius: 14px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #121211; --surface: #1C1B19; --surface-2: #26241F; --ink: #F4F0E4; --muted: #B3AD9C; --line: #36332B;
+    --hdr: #0A0A09; --ok: #5CCB8E; --brand: #1A1A1A; --brand-ink: #FFFFFF; --logo-bc: #FFC629; --logo-faz: #FFFFFF;
+    --logo-ring: #4A463C; --shadow: 0 1px 2px rgba(0, 0, 0, 0.4); color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #121211; --surface: #1C1B19; --surface-2: #26241F; --ink: #F4F0E4; --muted: #B3AD9C; --line: #36332B;
+  --hdr: #0A0A09; --ok: #5CCB8E; --brand: #1A1A1A; --brand-ink: #FFFFFF; --logo-bc: #FFC629; --logo-faz: #FFFFFF;
+  --logo-ring: #4A463C; --shadow: 0 1px 2px rgba(0, 0, 0, 0.4); color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 16px; line-height: 1.5; padding: 0; }
+.wrap { max-width: 1200px; margin-inline: auto; padding-inline: 16px; }
+h1, h2, h3 { font-family: var(--font-display); line-height: 1.1; margin: 0; text-wrap: balance; letter-spacing: -0.02em; }
+p { margin: 0; }
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; border-radius: 6px; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; scroll-behavior: auto !important; } }
+svg.thumb-svg { fill: none; stroke: currentColor; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+svg.thumb-svg .a { fill: var(--accent); }
+svg.thumb-svg .i { fill: currentColor; }
+
+/* Logo: proporções da logo aprovada */
+.brand { --s: 44px; display: inline-flex; align-items: center; gap: calc(var(--s) * 0.242); text-decoration: none; flex-shrink: 0; }
+.badge {
+  position: relative; width: var(--s); height: var(--s); border-radius: calc(var(--s) * 0.242); background: var(--brand); color: var(--brand-ink);
+  box-shadow: 0 0 0 1.5px var(--logo-ring); display: grid; place-items: center;
+  font-family: var(--font-display); font-weight: 800; font-size: calc(var(--s) * 0.455); letter-spacing: -0.033em; flex-shrink: 0;
+}
+.badge i {
+  position: absolute; right: calc(var(--s) * -0.09); bottom: calc(var(--s) * -0.09); width: calc(var(--s) * 0.364); height: calc(var(--s) * 0.364);
+  border-radius: 50%; background: var(--check); border: calc(var(--s) * 0.038) solid var(--bg); display: grid; place-items: center; box-sizing: border-box;
+}
+.badge i svg { width: 55%; height: 55%; }
+.wordmark { display: inline-flex; align-items: baseline; gap: 0.135em; font-family: var(--font-display); font-size: calc(var(--s) * 0.788); line-height: 1; }
+.wordmark b { font-weight: 800; color: var(--logo-bc); letter-spacing: -0.038em; }
+.wordmark span { font-weight: 400; color: var(--logo-faz); letter-spacing: -0.029em; }
+/* Versão aprovada para fundo escuro: BC amarelo, faz branco */
+.hdr .wordmark { --s: 46px; }
+.hdr .wordmark b { color: #FFC629; }
+.hdr .wordmark span { color: #FFFFFF; }
+
+/* Barra superior */
+.hdr { background: var(--hdr); color: #FFFFFF; padding-top: env(safe-area-inset-top, 0px); }
+.hdr-row { display: flex; align-items: center; gap: 24px; padding-block: 14px; flex-wrap: wrap; }
+.hdr-row .logo-link { text-decoration: none; }
+.search { flex: 1 1 360px; min-width: 0; display: flex; background: #FFFFFF; border-radius: 10px; overflow: hidden; }
+.search input {
+  flex: 1; min-width: 0; border: 0; padding: 0 16px; height: 46px; font: 400 16px var(--font-body); color: #1A1A1A; background: transparent;
+}
+.search input::placeholder { color: #6B675C; }
+.search input:focus { outline: none; }
+.search:focus-within { box-shadow: 0 0 0 3px var(--accent); }
+.search button { width: 52px; border: 0; border-left: 1px solid #E2DBC8; background: #FFFFFF; color: #1A1A1A; cursor: pointer; display: grid; place-items: center; }
+.search button svg { width: 20px; height: 20px; }
+.hdr-cta { display: inline-flex; align-items: center; gap: 8px; min-height: 46px; padding: 0 18px; border-radius: 10px; background: var(--accent); color: #1A1A1A; font-weight: 600; font-size: 15px; text-decoration: none; white-space: nowrap; }
+.hdr-cta svg { width: 18px; height: 18px; }
+@media (max-width: 700px) {
+  .hdr-row { gap: 12px; }
+  .search { order: 3; flex-basis: 100%; }
+  .hdr-row .logo-link { margin-right: auto; }
+  .hdr .wordmark { --s: 40px; }
+}
+
+/* Faixa de categorias */
+.cats { background: var(--accent); color: #1A1A1A; }
+.cats-row { display: flex; gap: 4px; overflow-x: auto; padding-block: 6px; scrollbar-width: none; }
+.cats-row::-webkit-scrollbar { display: none; }
+.cat {
+  flex-shrink: 0; min-height: 40px; padding: 0 14px; border: 0; border-radius: 8px; background: transparent; color: #1A1A1A;
+  font: 500 15px var(--font-body); cursor: pointer; white-space: nowrap;
+}
+.cat:hover { background: rgba(26, 26, 26, 0.08); }
+.cat[aria-pressed="true"] { background: #1A1A1A; color: #FFC629; font-weight: 600; }
+
+/* Banner */
+.banner { margin-top: 20px; position: relative; border-radius: 18px; overflow: hidden; background: var(--hdr); color: #FFFFFF; }
+.slide { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.7fr); align-items: center; gap: 24px; padding: clamp(24px, 5vw, 48px) clamp(24px, 6vw, 72px); min-height: 260px; }
+.slide[hidden] { display: none !important; }
+.slide .tagline { color: #FFC629; font-size: 13px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; }
+.slide h2 { font-size: clamp(28px, 4.4vw, 48px); font-weight: 800; margin-top: 10px; }
+.slide p { color: #D9D4C5; margin-top: 12px; max-width: 46ch; font-size: 17px; }
+.slide .go { display: inline-flex; margin-top: 22px; min-height: 46px; align-items: center; padding: 0 20px; border-radius: 10px; background: #FFC629; color: #1A1A1A; font-weight: 600; text-decoration: none; }
+.slide .art { color: #FFFFFF; justify-self: center; width: min(200px, 100%); }
+.slide .art svg { width: 100%; height: auto; }
+@media (max-width: 640px) { .slide { grid-template-columns: minmax(0, 1fr); } .slide .art { display: none; } }
+.banner-nav { position: absolute; right: 16px; bottom: 14px; display: flex; align-items: center; gap: 8px; }
+.banner-nav button.arrow { width: 44px; height: 44px; border-radius: 50%; border: 1px solid rgba(255, 255, 255, 0.25); background: rgba(255, 255, 255, 0.08); color: #FFFFFF; cursor: pointer; display: grid; place-items: center; }
+.banner-nav button.arrow svg { width: 18px; height: 18px; }
+.dots { display: flex; gap: 6px; margin-inline: 6px; }
+.dots button { width: 10px; height: 10px; padding: 0; border-radius: 50%; border: 0; background: rgba(255, 255, 255, 0.35); cursor: pointer; }
+.dots button[aria-current="true"] { background: #FFC629; width: 24px; border-radius: 5px; }
+
+/* Benefícios */
+.perks { margin-top: 16px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1px; background: var(--line); border-radius: var(--radius); overflow: hidden; border: 1px solid var(--line); }
+@media (max-width: 860px) { .perks { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.perk { background: var(--surface); padding: 18px; display: flex; gap: 14px; align-items: center; }
+.perk svg { width: 28px; height: 28px; flex-shrink: 0; fill: none; stroke: var(--ink); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.perk strong { display: block; font-size: 15px; }
+.perk span { font-size: 14px; color: var(--muted); }
+
+/* Vitrine */
+.shelf { margin-top: 36px; }
+.shelf-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 16px; margin-bottom: 16px; }
+.shelf-head h2 { font-size: clamp(24px, 3vw, 30px); font-weight: 800; }
+.shelf-head span { color: var(--muted); font-size: 15px; }
+.products { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr)); gap: 16px; }
+.card {
+  background: var(--surface); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; text-decoration: none;
+  display: flex; flex-direction: column; min-width: 0; transition: transform .15s ease, box-shadow .15s ease; border: 1px solid var(--line);
+}
+.card:hover { transform: translateY(-2px); box-shadow: 0 2px 4px rgba(26, 26, 26, 0.08), 0 16px 32px -14px rgba(26, 26, 26, 0.3); }
+.thumb { position: relative; aspect-ratio: 1 / 1; max-width: 100%; background: var(--surface-2); display: grid; place-items: center; color: var(--ink); }
+.thumb svg { width: 52%; height: auto; }
+.selo { position: absolute; top: 12px; left: 12px; background: var(--ink); color: var(--bg); font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: 6px; }
+.card-body { padding: 14px 16px 18px; display: flex; flex-direction: column; gap: 6px; border-top: 1px solid var(--line); flex: 1; }
+.card-body h3 { font-family: var(--font-body); font-weight: 500; font-size: 16px; letter-spacing: 0; line-height: 1.35; }
+.consulta { font-family: var(--font-display); font-weight: 800; font-size: 19px; letter-spacing: -0.01em; margin-top: 2px; }
+.prazo-ok { color: var(--ok); font-size: 14px; font-weight: 600; }
+.card-cat { color: var(--muted); font-size: 13px; margin-top: auto; padding-top: 6px; }
+.empty { background: var(--surface); border: 1px dashed var(--line); border-radius: var(--radius); padding: 32px; text-align: center; display: grid; gap: 12px; justify-items: center; }
+.empty p { color: var(--muted); max-width: 44ch; }
+
+/* Botões */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px; padding: 0 22px; border-radius: 10px; font: 600 16px var(--font-body); text-decoration: none; border: 2px solid transparent; cursor: pointer; }
+.btn svg { width: 20px; height: 20px; }
+.btn-primary { background: var(--accent); color: var(--accent-ink); }
+.btn-ghost { background: transparent; color: var(--ink); border-color: var(--line); }
+
+/* Como funciona e dúvidas */
+.info { margin-top: 48px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px; }
+@media (max-width: 860px) { .info { grid-template-columns: minmax(0, 1fr); } }
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 24px; }
+.panel h2 { font-size: 24px; font-weight: 800; margin-bottom: 16px; }
+.steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 16px; counter-reset: passo; }
+.steps li { counter-increment: passo; display: grid; grid-template-columns: 36px minmax(0, 1fr); gap: 14px; }
+.steps li::before { content: counter(passo); width: 36px; height: 36px; border-radius: 50%; background: var(--accent); color: #1A1A1A; display: grid; place-items: center; font-family: var(--font-display); font-weight: 800; }
+.steps strong { display: block; }
+.steps span { color: var(--muted); font-size: 15px; }
+.faq details { border-top: 1px solid var(--line); }
+.faq details:first-of-type { border-top: 0; }
+.faq summary { cursor: pointer; padding-block: 14px; font-weight: 600; list-style: none; display: flex; justify-content: space-between; gap: 16px; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; font-family: var(--font-display); font-size: 22px; line-height: 1; }
+.faq details[open] summary::after { content: "–"; }
+.faq details p { color: var(--muted); padding-bottom: 14px; font-size: 15px; }
+
+/* Página do serviço */
+.crumbs { margin-top: 20px; font-size: 14px; color: var(--muted); display: flex; flex-wrap: wrap; gap: 6px; }
+.crumbs a { color: var(--muted); }
+.crumbs a:hover { color: var(--ink); }
+.pdp { margin-top: 14px; background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: clamp(16px, 3vw, 32px); display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); gap: clamp(20px, 4vw, 48px); }
+@media (max-width: 820px) { .pdp { grid-template-columns: minmax(0, 1fr); } }
+.pdp .thumb { border-radius: var(--radius); }
+.pdp .thumb svg { width: 46%; }
+.buy { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+.buy .cat-label { color: var(--muted); font-size: 14px; }
+.buy h1 { font-size: clamp(26px, 3.4vw, 36px); font-weight: 800; }
+.buy .lead { color: var(--muted); font-size: 17px; }
+.buy .consulta { font-size: 30px; }
+.buy .consulta small { display: block; font-family: var(--font-body); font-weight: 400; font-size: 14px; color: var(--muted); letter-spacing: 0; }
+.buy ul { list-style: none; margin: 0; padding: 16px 0; display: grid; gap: 10px; border-block: 1px solid var(--line); }
+.buy li { display: flex; gap: 10px; align-items: flex-start; }
+.buy li svg { width: 20px; height: 20px; flex-shrink: 0; margin-top: 2px; fill: none; stroke: var(--ok); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.buy .actions { display: grid; gap: 10px; }
+.buy .note { font-size: 14px; color: var(--muted); }
+.desc { margin-top: 20px; }
+.desc h2 { font-size: 24px; font-weight: 800; margin-bottom: 10px; }
+.desc p { color: var(--muted); max-width: 70ch; }
+
+/* Rodapé */
+.foot { margin-top: 56px; background: var(--surface); border-top: 1px solid var(--line); }
+.foot-row { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 20px; padding-block: 28px 36px; font-size: 15px; color: var(--muted); }
+.foot-row .contact { display: grid; gap: 2px; }
+.foot-row strong { color: var(--ink); font-variant-numeric: tabular-nums; }
+</style>
+</head>
+<body>
+
+<header class="hdr">
+  <div class="wrap hdr-row">
+    <a class="logo-link" href="#inicio" aria-label="BC Faz, página inicial"><span class="wordmark"><b>BC</b> <span>faz</span></span></a>
+    <form class="search" id="busca-form" role="search">
+      <label for="busca" class="sr" hidden>Buscar serviços</label>
+      <input id="busca" type="search" placeholder="Buscar logo, cardápio, posts, planilha..." aria-label="Buscar serviços" autocomplete="off">
+      <button type="submit" aria-label="Buscar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg></button>
+    </form>
+    <a class="hdr-cta js-wa" data-msg="Olá! Vim pelo site da BC Faz e quero saber mais." href="https://wa.me/" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 0 1-13.4 7.9L3 21l1.2-4.4A9 9 0 1 1 21 12z"/></svg>
+      WhatsApp
+    </a>
+  </div>
+</header>
+<nav class="cats" aria-label="Categorias">
+  <div class="wrap cats-row" id="cats"></div>
+</nav>
+
+<main class="wrap" id="inicio">
+  <div id="home">
+    <section class="banner" aria-roledescription="carrossel" aria-label="Destaques">
+      <div id="slides"></div>
+      <div class="banner-nav">
+        <button class="arrow" id="prev" type="button" aria-label="Destaque anterior"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button>
+        <div class="dots" id="dots"></div>
+        <button class="arrow" id="next" type="button" aria-label="Próximo destaque"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>
+      </div>
+    </section>
+
+    <section class="perks" aria-label="Vantagens">
+      <div class="perk"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M3 10h18M7 15h3"/></svg><div><strong>Pagamento por Pix</strong><span>Metade no início, metade na entrega</span></div></div>
+      <div class="perk"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><div><strong>Entrega em poucos dias</strong><span>Prazo informado em cada serviço</span></div></div>
+      <div class="perk"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16v4z"/><path d="M13 7l4 4"/></svg><div><strong>Ajustes incluídos</strong><span>Até você aprovar o resultado</span></div></div>
+      <div class="perk"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 7L9 18l-5-5"/></svg><div><strong>Não precisa de CNPJ</strong><span>Atendemos quem está começando</span></div></div>
+    </section>
+
+    <section class="shelf" id="catalogo">
+      <div class="shelf-head">
+        <h2 id="shelf-title">Todos os serviços</h2>
+        <span id="shelf-count"></span>
+      </div>
+      <div class="products" id="grid" aria-live="polite"></div>
+    </section>
+
+    <section class="info" id="como-funciona">
+      <div class="panel">
+        <h2>Como funciona</h2>
+        <ol class="steps">
+          <li><div><strong>Escolha o serviço</strong><span>Toque em “Pedir orçamento” e fale com a gente no WhatsApp.</span></div></li>
+          <li><div><strong>Receba o orçamento</strong><span>Confirmamos o que você precisa, o valor e o prazo.</span></div></li>
+          <li><div><strong>Responda umas perguntas</strong><span>Nome do negócio, cores, produtos. Leva poucos minutos.</span></div></li>
+          <li><div><strong>Receba e aprove</strong><span>Você recebe tudo pronto e pede os ajustes que quiser.</span></div></li>
+        </ol>
+      </div>
+      <div class="panel faq" id="duvidas">
+        <h2>Dúvidas</h2>
+        <details><summary>Preciso ter CNPJ para contratar?</summary><p>Não. Atendemos autônomos, quem vende em casa e quem ainda está tirando o negócio do papel.</p></details>
+        <details><summary>Quanto custa?</summary><p>Cada negócio tem uma necessidade, então o valor é combinado no WhatsApp, antes de começar. Você só paga depois de aprovar o orçamento.</p></details>
+        <details><summary>Quanto tempo leva?</summary><p>Cada serviço mostra o prazo. A maioria fica pronta entre 1 e 4 dias depois que você responde as perguntas.</p></details>
+        <details><summary>Como é o pagamento?</summary><p>Por Pix: metade para começar e o restante na entrega. Nas mensalidades, o pagamento é no início de cada mês.</p></details>
+      </div>
+    </section>
+  </div>
+
+  <div id="produto" hidden></div>
+</main>
+
+<footer class="foot">
+  <div class="wrap foot-row">
+    <a class="brand" href="#inicio" aria-label="Voltar ao início">
+      <span class="badge">BC<i><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" stroke="#1A1A1A" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></i></span>
+      <span class="wordmark"><b>BC</b> <span>faz</span></span>
+    </a>
+    <div class="contact">
+      <span>Você vende, a BC faz.</span>
+      <span>WhatsApp: <strong id="wa-texto">(00) 00000-0000</strong></span>
+      <span>Catálogo de exemplo.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Coloque aqui o número com DDD, só números (ex.: 88999998888). Vazio = o cliente escolhe o contato.
+const WHATSAPP = '';
+
+// Categorias: adicione aqui, ex.: { id: 'redes', nome: 'Redes sociais' }
+const CATS = [];
+
+const ART = {
+  posts: '<rect x="34" y="10" width="52" height="100" rx="9"/><rect class="a" x="41" y="28" width="11" height="11" rx="2"/><rect x="54.5" y="28" width="11" height="11" rx="2"/><rect x="68" y="28" width="11" height="11" rx="2"/><rect x="41" y="42" width="11" height="11" rx="2"/><rect class="a" x="54.5" y="42" width="11" height="11" rx="2"/><rect x="68" y="42" width="11" height="11" rx="2"/><rect x="41" y="56" width="11" height="11" rx="2"/><rect x="54.5" y="56" width="11" height="11" rx="2"/><rect class="a" x="68" y="56" width="11" height="11" rx="2"/><path d="M52 98h16"/>',
+  bio: '<circle class="a" cx="60" cy="38" r="16"/><path d="M34 68h52M42 79h36"/><circle cx="42" cy="98" r="7"/><circle class="a" cx="60" cy="98" r="7"/><circle cx="78" cy="98" r="7"/>',
+  chat: '<rect x="14" y="20" width="64" height="26" rx="13"/><rect class="a" x="42" y="54" width="64" height="26" rx="13"/><rect x="14" y="88" width="44" height="18" rx="9"/>',
+  logo: '<rect class="i" x="24" y="24" width="68" height="68" rx="16"/><circle class="a" cx="90" cy="90" r="15"/><path d="M83 90l5 5 9-9"/>',
+  pagina: '<rect x="34" y="8" width="52" height="104" rx="9"/><circle class="a" cx="60" cy="32" r="9"/><rect x="42" y="50" width="36" height="11" rx="5.5"/><rect x="42" y="67" width="36" height="11" rx="5.5"/><rect class="a" x="42" y="84" width="36" height="11" rx="5.5"/>',
+  qr: '<rect x="18" y="18" width="84" height="84" rx="8"/><rect class="i" x="28" y="28" width="20" height="20" rx="3"/><rect class="i" x="72" y="28" width="20" height="20" rx="3"/><rect class="i" x="28" y="72" width="20" height="20" rx="3"/><rect class="a" x="56" y="56" width="10" height="10" rx="2"/><rect class="a" x="76" y="78" width="12" height="12" rx="2"/><rect class="i" x="58" y="80" width="7" height="7"/><rect class="i" x="78" y="58" width="7" height="7"/><rect class="i" x="56" y="30" width="7" height="7"/>',
+  planilha: '<rect x="16" y="22" width="88" height="76" rx="6"/><rect class="a" x="17.5" y="23.5" width="85" height="16"/><path d="M16 58h88M16 78h88M46 22v76M76 22v76"/>',
+  whatsapp: '<path d="M96 58a36 36 0 0 1-53.6 31.6L24 96l6.4-18.4A36 36 0 1 1 96 58z"/><path class="a" d="M44 58l10 10 22-22" stroke-width="7"/><path d="M44 58l10 10 22-22"/>',
+  calendario: '<rect x="18" y="24" width="84" height="76" rx="8"/><path d="M18 44h84M40 16v16M80 16v16"/><rect class="a" x="30" y="54" width="12" height="12" rx="2"/><rect x="54" y="54" width="12" height="12" rx="2"/><rect class="a" x="78" y="54" width="12" height="12" rx="2"/><rect x="30" y="76" width="12" height="12" rx="2"/><rect class="a" x="54" y="76" width="12" height="12" rx="2"/><rect x="78" y="76" width="12" height="12" rx="2"/>',
+  atualiza: '<circle class="a" cx="60" cy="60" r="10"/><path d="M90 48a32 32 0 0 0-58-6M30 72a32 32 0 0 0 58 6"/><path d="M28 28v16h16M92 92V76H76"/>',
+  datas: '<rect x="24" y="52" width="72" height="50" rx="4"/><rect class="a" x="18" y="38" width="84" height="16" rx="3"/><path d="M60 38v64M60 38c-8-16-28-14-20 0M60 38c8-16 28-14 20 0"/>',
+  kit: '<path class="a" d="M18 42l42-20 42 20-42 20z"/><path d="M18 42v42l42 22 42-22V42M60 62v44"/>'
+};
+const svg = (k) => '<svg class="thumb-svg" viewBox="0 0 120 120" aria-hidden="true">' + ART[k] + '</svg>';
+
+// Serviços: adicione aqui, um por linha, conforme forem definidos
+const ITENS = [];
+
+const SLIDES = [
+  { tag: 'BC Faz', titulo: 'Seu negócio pronto para vender.', texto: 'Logo, cardápio digital, posts e planilhas feitos sob medida para quem está começando. Você cuida dos clientes, a BC faz o resto.', art: 'kit' }
+];
+
+const porId = (id) => ITENS.find((i) => i.id === id);
+const catNome = (id) => (CATS.find((c) => c.id === id) || {}).nome || '';
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const norm = (s) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+const prazoTxt = (i) => i.prazo === 0 ? 'Entrega todo mês' : (i.prazo === 1 ? 'Pronto em 1 dia' : 'Pronto em ' + i.prazo + ' dias');
+const ICON_OK = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+
+function linkWA(msg) {
+  const base = WHATSAPP ? 'https://wa.me/55' + WHATSAPP.replace(/\D/g, '') : 'https://wa.me/';
+  return base + '?text=' + encodeURIComponent(msg);
+}
+
+function card(i) {
+  return '<a class="card" href="#p-' + i.id + '">' +
+    '<div class="thumb">' + (i.selo ? '<span class="selo">' + esc(i.selo) + '</span>' : '') + svg(i.art) + '</div>' +
+    '<div class="card-body">' +
+    '<h3>' + esc(i.nome) + '</h3>' +
+    '<div class="consulta">Sob consulta</div>' +
+    '<div class="prazo-ok">' + prazoTxt(i) + '</div>' +
+    '<div class="card-cat">' + esc(catNome(i.cat)) + '</div>' +
+    '</div></a>';
+}
+
+// Categorias e busca
+let cat = 'todos';
+let termo = '';
+const catsEl = document.getElementById('cats');
+const catsTodas = CATS.length ? [{ id: 'todos', nome: 'Todos os serviços' }].concat(CATS) : [];
+catsEl.innerHTML = catsTodas.map((c) => '<button class="cat" type="button" id="cat-' + c.id + '" data-cat="' + c.id + '">' + esc(c.nome) + '</button>').join('');
+document.querySelector('.cats').hidden = !CATS.length;
+catsEl.addEventListener('click', (e) => {
+  const b = e.target.closest('[data-cat]');
+  if (!b) return;
+  cat = b.dataset.cat; termo = ''; document.getElementById('busca').value = '';
+  irPara('catalogo');
+});
+
+function renderGrid() {
+  let lista = ITENS.filter((i) => cat === 'todos' || i.cat === cat);
+  if (termo) {
+    const t = norm(termo);
+    lista = ITENS.filter((i) => norm(i.nome + ' ' + i.desc + ' ' + i.inclui.join(' ') + ' ' + catNome(i.cat)).includes(t));
+  }
+  document.getElementById('shelf-title').textContent = termo ? 'Resultados para “' + termo + '”' : (cat === 'todos' ? 'Serviços' : catNome(cat));
+  document.getElementById('shelf-count').textContent = lista.length ? lista.length + (lista.length === 1 ? ' serviço' : ' serviços') : '';
+  if (!ITENS.length) {
+    document.getElementById('grid').innerHTML =
+      '<div class="empty" style="grid-column: 1 / -1"><strong>Nosso catálogo está sendo preparado.</strong><p>Em breve os serviços aparecem aqui. Enquanto isso, conte no WhatsApp o que seu negócio precisa.</p>' +
+      '<a class="btn btn-primary" href="' + linkWA('Olá! Vim pelo site da BC Faz e quero saber o que vocês fazem.') + '" target="_blank" rel="noopener">Falar no WhatsApp</a></div>';
+    return;
+  }
+  document.getElementById('grid').innerHTML = lista.length ? lista.map(card).join('') :
+    '<div class="empty" style="grid-column: 1 / -1"><strong>Nada encontrado para essa busca.</strong><p>Conte no WhatsApp o que você precisa. Se não estiver no catálogo, a gente faz sob medida.</p>' +
+    '<a class="btn btn-primary" href="' + linkWA('Olá! Procurei no site da BC Faz e não achei o que preciso: ' + termo) + '" target="_blank" rel="noopener">Falar no WhatsApp</a></div>';
+  document.querySelectorAll('.cat').forEach((b) => b.setAttribute('aria-pressed', String(!termo && b.dataset.cat === cat)));
+}
+
+document.getElementById('busca-form').addEventListener('submit', (e) => {
+  e.preventDefault();
+  termo = document.getElementById('busca').value.trim();
+  irPara('catalogo');
+});
+document.getElementById('busca').addEventListener('input', (e) => {
+  termo = e.target.value.trim();
+  if (!document.getElementById('home').hidden) renderGrid();
+});
+
+// Banner
+let atual = 0;
+document.getElementById('slides').innerHTML = SLIDES.map((s, n) =>
+  '<div class="slide" role="group" aria-roledescription="destaque" aria-label="' + (n + 1) + ' de ' + SLIDES.length + '"' + (n ? ' hidden' : '') + '>' +
+  '<div><div class="tagline">' + esc(s.tag) + '</div><h2>' + esc(s.titulo) + '</h2><p>' + esc(s.texto) + '</p>' +
+  (s.alvo ? '<a class="go" href="#p-' + s.alvo + '">Ver serviço</a>' :
+    '<a class="go" href="' + linkWA('Olá! Vim pelo site da BC Faz e quero saber mais.') + '" target="_blank" rel="noopener">Falar no WhatsApp</a>') + '</div>' +
+  '<div class="art">' + svg(s.art) + '</div></div>').join('');
+document.getElementById('dots').innerHTML = SLIDES.map((s, n) => '<button type="button" aria-label="Ir para o destaque ' + (n + 1) + '" data-n="' + n + '"></button>').join('');
+function mostrar(n) {
+  atual = (n + SLIDES.length) % SLIDES.length;
+  document.querySelectorAll('.slide').forEach((el, k) => { el.hidden = k !== atual; });
+  document.querySelectorAll('.dots button').forEach((d, k) => d.setAttribute('aria-current', String(k === atual)));
+}
+document.getElementById('prev').addEventListener('click', () => { mostrar(atual - 1); parar(); });
+document.getElementById('next').addEventListener('click', () => { mostrar(atual + 1); parar(); });
+document.getElementById('dots').addEventListener('click', (e) => { const b = e.target.closest('[data-n]'); if (b) { mostrar(+b.dataset.n); parar(); } });
+let timer = null;
+const semMovimento = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+function parar() { if (timer) { clearInterval(timer); timer = null; } }
+document.querySelector('.banner-nav').hidden = SLIDES.length < 2;
+if (!semMovimento && SLIDES.length > 1) timer = setInterval(() => mostrar(atual + 1), 6000);
+document.querySelector('.banner').addEventListener('mouseenter', parar);
+mostrar(0);
+
+// Página do serviço
+function renderProduto(i) {
+  const msg = 'Olá! Vim pelo site da BC Faz e quero um orçamento para: ' + i.nome + '.';
+  const juntos = i.combina.map(porId).filter(Boolean);
+  document.getElementById('produto').innerHTML =
+    '<nav class="crumbs" aria-label="Caminho"><a href="#inicio">Início</a><span aria-hidden="true">›</span>' +
+    '<a href="#catalogo" data-cat-link="' + i.cat + '">' + esc(catNome(i.cat)) + '</a><span aria-hidden="true">›</span><span>' + esc(i.nome) + '</span></nav>' +
+    '<section class="pdp">' +
+    '<div class="thumb">' + (i.selo ? '<span class="selo">' + esc(i.selo) + '</span>' : '') + svg(i.art) + '</div>' +
+    '<div class="buy">' +
+    '<span class="cat-label">' + esc(catNome(i.cat)) + '</span>' +
+    '<h1>' + esc(i.nome) + '</h1>' +
+    '<p class="lead">' + esc(i.desc) + '</p>' +
+    '<div class="consulta">Sob consulta<small>O valor é combinado no WhatsApp antes de começar</small></div>' +
+    '<div class="prazo-ok">' + prazoTxt(i) + ' depois das suas respostas</div>' +
+    '<ul>' + i.inclui.map((t) => '<li>' + ICON_OK + '<span>' + esc(t) + '</span></li>').join('') + '</ul>' +
+    '<div class="actions">' +
+    '<a class="btn btn-primary" href="' + linkWA(msg) + '" target="_blank" rel="noopener">Pedir orçamento no WhatsApp</a>' +
+    '<a class="btn btn-ghost" href="#catalogo">Ver outros serviços</a></div>' +
+    '<p class="note">Pagamento por Pix. Ajustes incluídos até você aprovar.</p>' +
+    '</div></section>' +
+    '<section class="desc"><h2>Descrição</h2><p>' + esc(i.detalhe) + '</p></section>' +
+    '<section class="shelf"><div class="shelf-head"><h2>Combina com este serviço</h2></div>' +
+    '<div class="products">' + juntos.map(card).join('') + '</div></section>';
+}
+
+// Navegação pelo endereço (#p-logo, #catalogo...)
+function irPara(id) {
+  if (location.hash === '#' + id) rota(); else location.hash = id;
+}
+document.addEventListener('click', (e) => {
+  const a = e.target.closest('[data-cat-link]');
+  if (a) { cat = a.dataset.catLink; termo = ''; }
+});
+function rota() {
+  const h = decodeURIComponent(location.hash.slice(1));
+  const home = document.getElementById('home');
+  const prod = document.getElementById('produto');
+  if (h.startsWith('p-') && porId(h.slice(2))) {
+    renderProduto(porId(h.slice(2)));
+    home.hidden = true; prod.hidden = false;
+    document.querySelectorAll('.cat').forEach((b) => b.setAttribute('aria-pressed', 'false'));
+    window.scrollTo(0, 0);
+    return;
+  }
+  prod.hidden = true; home.hidden = false;
+  renderGrid();
+  if (h === 'inicio' || !h) { window.scrollTo(0, 0); return; }
+  const alvo = document.getElementById(h);
+  if (alvo) alvo.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+window.addEventListener('hashchange', rota);
+
+// Links fixos de WhatsApp
+document.querySelectorAll('.js-wa').forEach((a) => { a.href = linkWA(a.dataset.msg); });
+if (WHATSAPP) {
+  const d = WHATSAPP.replace(/\D/g, '');
+  document.getElementById('wa-texto').textContent = '(' + d.slice(0, 2) + ') ' + d.slice(2, -4) + '-' + d.slice(-4);
+}
+
+rota();
+</script>
+
+</body>
+</html>
