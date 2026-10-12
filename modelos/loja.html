@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ponto Firme Ateliê · Modelo BC Faz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;800&display=swap">
+<style>
+:root { --navy: #1F2A44; --mus: #E3A72F; --bg: #F6F5F2; --card: #FFFFFF; --ink: #1A2033; --muted: #5D6375; --line: #E4E2DC; }
+* { box-sizing: border-box; }
+html { color-scheme: light; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: "Outfit", system-ui, sans-serif; font-size: 16px; line-height: 1.5; }
+[hidden] { display: none !important; }
+h1, h2, h3 { margin: 0; line-height: 1.1; }
+p { margin: 0; }
+button, input, select { font: inherit; }
+:focus-visible { outline: 3px solid var(--mus); outline-offset: 2px; }
+.bcbar { background: #1A1A1A; color: #FFFFFF; font-size: 13px; padding: 8px 16px; display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+.bcbar b { color: #FFC629; }
+.bcbar a { color: #FFC629; font-weight: 600; }
+.wrap { max-width: 1140px; margin-inline: auto; padding-inline: 16px; }
+header.top { background: var(--navy); color: #FFFFFF; }
+.top-row { display: flex; align-items: center; gap: 20px; padding-block: 16px; flex-wrap: wrap; }
+.logo { font-weight: 800; font-size: 22px; letter-spacing: -0.01em; margin-right: auto; }
+.logo span { color: var(--mus); }
+.search { flex: 1 1 280px; max-width: 460px; }
+.search input { width: 100%; min-height: 44px; border-radius: 10px; border: 0; padding: 0 14px; color: var(--ink); }
+.strip { background: var(--mus); color: var(--navy); font-weight: 500; font-size: 14px; }
+.strip .wrap { display: flex; flex-wrap: wrap; gap: 6px 28px; justify-content: center; padding-block: 8px; }
+.hero { padding-block: 36px 20px; display: grid; gap: 10px; }
+.hero h1 { font-size: clamp(30px, 5vw, 50px); font-weight: 800; letter-spacing: -0.02em; max-width: 18ch; }
+.hero p { color: var(--muted); font-size: 18px; max-width: 48ch; }
+.chips { display: flex; gap: 8px; overflow-x: auto; padding-block: 16px; }
+.chip { flex-shrink: 0; min-height: 42px; padding: 0 16px; border-radius: 999px; border: 1.5px solid var(--line); background: var(--card); color: var(--ink); font-weight: 500; cursor: pointer; }
+.chip[aria-pressed="true"] { background: var(--navy); border-color: var(--navy); color: #FFFFFF; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr)); gap: 16px; padding-bottom: 48px; }
+.prod { background: var(--card); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; }
+.foto { aspect-ratio: 1; max-width: 100%; display: grid; place-items: center; position: relative; }
+.foto svg { width: 54%; height: auto; }
+.tag { position: absolute; top: 10px; left: 10px; background: var(--navy); color: #FFFFFF; font-size: 12px; padding: 3px 9px; border-radius: 6px; }
+.body { padding: 14px 16px 16px; display: grid; gap: 10px; }
+.body h3 { font-size: 17px; font-weight: 600; }
+.preco { font-size: 22px; font-weight: 800; font-variant-numeric: tabular-nums; }
+.preco small { font-size: 13px; font-weight: 400; color: var(--muted); display: block; }
+.cores { display: flex; gap: 8px; }
+.cor { width: 32px; height: 32px; border-radius: 50%; border: 2px solid var(--card); box-shadow: 0 0 0 1.5px var(--line); cursor: pointer; padding: 0; }
+.cor[aria-pressed="true"] { box-shadow: 0 0 0 2.5px var(--navy); }
+select { min-height: 42px; border-radius: 10px; border: 1.5px solid var(--line); padding: 0 10px; background: var(--card); color: var(--ink); }
+.comprar { min-height: 46px; border-radius: 10px; background: var(--navy); color: #FFFFFF; font-weight: 600; text-decoration: none; display: grid; place-items: center; }
+.vazio { grid-column: 1 / -1; text-align: center; color: var(--muted); padding: 40px 0; }
+footer { border-top: 1px solid var(--line); padding-block: 24px; color: var(--muted); font-size: 14px; text-align: center; }
+</style>
+</head>
+<body>
+<div class="bcbar"><span>Este é um modelo de site feito pela <b>BC Faz</b></span><a href="../index.html#p-site-loja">Quero um assim</a></div>
+
+<header class="top">
+  <div class="wrap top-row">
+    <div class="logo">Ponto Firme <span>Ateliê</span></div>
+    <div class="search"><input id="busca" type="search" placeholder="Buscar bolsas, blusas, tapetes..." aria-label="Buscar produtos"></div>
+  </div>
+</header>
+<div class="strip"><div class="wrap"><span>Feito à mão, peça por peça</span><span>Envio para todo o Brasil</span><span>Pix com 5% de desconto</span></div></div>
+
+<main class="wrap">
+  <section class="hero">
+    <h1>Crochê feito com calma, para durar anos.</h1>
+    <p>Escolha a peça, a cor e o tamanho. O pedido chega no nosso WhatsApp e a gente combina a entrega com você.</p>
+  </section>
+  <div class="chips" id="chips" role="group" aria-label="Categorias"></div>
+  <div class="grid" id="grid"></div>
+</main>
+<footer>Ponto Firme Ateliê é um negócio fictício, criado para mostrar o modelo.</footer>
+
+<script>
+const ICON = {
+  bolsa: '<path d="M30 46h60l-6 50H36z" fill="currentColor" opacity=".9"/><path d="M44 46c0-14 32-14 32 0" fill="none" stroke="currentColor" stroke-width="6"/>',
+  blusa: '<path d="M42 26l-22 12 8 18 10-4v44h44V52l10 4 8-18-22-12c-2 8-10 12-18 12s-16-4-18-12z" fill="currentColor"/>',
+  tapete: '<circle cx="60" cy="60" r="38" fill="currentColor"/><circle cx="60" cy="60" r="26" fill="none" stroke="#FFFFFF" stroke-width="4" opacity=".6"/><circle cx="60" cy="60" r="12" fill="none" stroke="#FFFFFF" stroke-width="4" opacity=".6"/>',
+  touca: '<path d="M28 74c0-28 14-44 32-44s32 16 32 44z" fill="currentColor"/><rect x="24" y="72" width="72" height="14" rx="5" fill="currentColor" opacity=".75"/><circle cx="60" cy="26" r="9" fill="currentColor"/>'
+};
+const PRODUTOS = [
+  { n: 'Bolsa de ombro Trama', cat: 'Bolsas', i: 'bolsa', p: 129, cores: ['#C9643B', '#2F4A6E', '#D8C3A5'], tam: ['Única'], tag: 'Mais vendida' },
+  { n: 'Bolsa de praia Sol', cat: 'Bolsas', i: 'bolsa', p: 99, cores: ['#E3A72F', '#3F7D6E'], tam: ['Média', 'Grande'] },
+  { n: 'Blusa cropped Brisa', cat: 'Roupas', i: 'blusa', p: 89, cores: ['#F2F0EA', '#B44A5C', '#4A6FA5'], tam: ['P', 'M', 'G'] },
+  { n: 'Colete Ponto Arroz', cat: 'Roupas', i: 'blusa', p: 119, cores: ['#7A5C43', '#2B2B2B'], tam: ['P', 'M', 'G', 'GG'], tag: 'Novo' },
+  { n: 'Tapete redondo Mandala', cat: 'Casa', i: 'tapete', p: 149, cores: ['#D8C3A5', '#3F7D6E', '#C9643B'], tam: ['60 cm', '80 cm', '1 m'] },
+  { n: 'Sousplat Flor', cat: 'Casa', i: 'tapete', p: 39, cores: ['#E3A72F', '#F2F0EA'], tam: ['Unidade', 'Kit com 6'] },
+  { n: 'Touca Pompom', cat: 'Acessórios', i: 'touca', p: 49, cores: ['#B44A5C', '#4A6FA5', '#2B2B2B'], tam: ['Infantil', 'Adulto'] },
+  { n: 'Touca Canelada', cat: 'Acessórios', i: 'touca', p: 55, cores: ['#7A5C43', '#3F7D6E'], tam: ['Adulto'] }
+];
+const brl = (n) => n.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 0 });
+const norm = (s) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+const escolha = PRODUTOS.map((p) => ({ cor: 0, tam: 0 }));
+const NOMES_COR = { '#C9643B': 'Terracota', '#2F4A6E': 'Azul', '#D8C3A5': 'Areia', '#E3A72F': 'Mostarda', '#3F7D6E': 'Verde', '#F2F0EA': 'Off-white', '#B44A5C': 'Vinho', '#4A6FA5': 'Azul claro', '#7A5C43': 'Marrom', '#2B2B2B': 'Preto' };
+let cat = 'Todos', termo = '';
+
+function link(k) {
+  const p = PRODUTOS[k], e = escolha[k];
+  const msg = 'Olá! Quero comprar:\n' + p.n + '\nCor: ' + NOMES_COR[p.cores[e.cor]] + '\nTamanho: ' + p.tam[e.tam] + '\nValor: ' + brl(p.p);
+  return 'https://wa.me/?text=' + encodeURIComponent(msg);
+}
+function render() {
+  const cats = ['Todos'].concat([...new Set(PRODUTOS.map((p) => p.cat))]);
+  document.getElementById('chips').innerHTML = cats.map((c) => '<button class="chip" type="button" data-cat="' + c + '" aria-pressed="' + (c === cat) + '">' + c + '</button>').join('');
+  const lista = PRODUTOS.map((p, k) => [p, k]).filter(([p]) => (cat === 'Todos' || p.cat === cat) && (!termo || norm(p.n + ' ' + p.cat).includes(norm(termo))));
+  document.getElementById('grid').innerHTML = lista.length ? lista.map(([p, k]) => {
+    const e = escolha[k];
+    return '<article class="prod"><div class="foto" style="background:' + p.cores[e.cor] + '22;color:' + p.cores[e.cor] + '">' +
+      (p.tag ? '<span class="tag">' + p.tag + '</span>' : '') + '<svg viewBox="0 0 120 120" aria-hidden="true">' + ICON[p.i] + '</svg></div>' +
+      '<div class="body"><h3>' + p.n + '</h3><div class="preco">' + brl(p.p) + '<small>ou ' + brl(Math.round(p.p * 0.95)) + ' no Pix</small></div>' +
+      '<div class="cores" role="group" aria-label="Cor">' + p.cores.map((c, ci) => '<button class="cor" type="button" style="background:' + c + '" aria-label="' + NOMES_COR[c] + '" aria-pressed="' + (ci === e.cor) + '" data-k="' + k + '" data-cor="' + ci + '"></button>').join('') + '</div>' +
+      '<label class="sr" for="tam-' + k + '" hidden>Tamanho</label><select id="tam-' + k + '" data-k="' + k + '" aria-label="Tamanho">' + p.tam.map((t, ti) => '<option value="' + ti + '"' + (ti === e.tam ? ' selected' : '') + '>' + t + '</option>').join('') + '</select>' +
+      '<a class="comprar" href="' + link(k) + '" target="_blank" rel="noopener">Comprar no WhatsApp</a></div></article>';
+  }).join('') : '<p class="vazio">Nenhuma peça encontrada. Chame no WhatsApp que a gente faz sob encomenda.</p>';
+}
+document.getElementById('chips').addEventListener('click', (e) => { const b = e.target.closest('[data-cat]'); if (b) { cat = b.dataset.cat; render(); } });
+document.getElementById('grid').addEventListener('click', (e) => { const b = e.target.closest('[data-cor]'); if (b) { escolha[+b.dataset.k].cor = +b.dataset.cor; render(); } });
+document.getElementById('grid').addEventListener('change', (e) => { const s = e.target.closest('select[data-k]'); if (s) { escolha[+s.dataset.k].tam = +s.value; render(); } });
+document.getElementById('busca').addEventListener('input', (e) => { termo = e.target.value.trim(); render(); });
+render();
+</script>
+</body>
+</html>

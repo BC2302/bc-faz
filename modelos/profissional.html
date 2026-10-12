@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fio Certo Elétrica · Modelo BC Faz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;800&display=swap">
+<style>
+:root { --teal: #0F5E5A; --teal-d: #0A4542; --mint: #D9EFEA; --orange: #E8742C; --bg: #FFFFFF; --soft: #F3F8F7; --ink: #12302E; --muted: #4F6664; --line: #DCE8E6; }
+* { box-sizing: border-box; }
+html { color-scheme: light; scroll-behavior: smooth; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: "Manrope", system-ui, sans-serif; font-size: 17px; line-height: 1.55; }
+[hidden] { display: none !important; }
+h1, h2, h3 { margin: 0; line-height: 1.1; letter-spacing: -0.02em; }
+p { margin: 0; }
+button, input, select, textarea { font: inherit; }
+:focus-visible { outline: 3px solid var(--orange); outline-offset: 2px; }
+.bcbar { background: #1A1A1A; color: #FFFFFF; font-size: 13px; padding: 8px 16px; display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+.bcbar b { color: #FFC629; }
+.bcbar a { color: #FFC629; font-weight: 600; }
+.wrap { max-width: 1080px; margin-inline: auto; padding-inline: 16px; }
+header.top .wrap { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding-block: 16px; }
+.logo { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 20px; color: var(--teal); }
+.logo svg { width: 34px; height: 34px; }
+.btn { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 22px; border-radius: 12px; font-weight: 700; text-decoration: none; border: 0; cursor: pointer; }
+.btn-o { background: var(--orange); color: #FFFFFF; }
+.btn-l { background: transparent; color: var(--teal); border: 2px solid var(--teal); }
+.hero { background: var(--teal); color: #FFFFFF; }
+.hero .wrap { padding-block: 48px; display: grid; gap: 16px; }
+.hero h1 { font-size: clamp(34px, 6vw, 58px); font-weight: 800; max-width: 16ch; }
+.hero p { color: var(--mint); font-size: 19px; max-width: 46ch; }
+.hero .acts { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 8px; }
+.hero .btn-l { color: #FFFFFF; border-color: #FFFFFF; }
+.selos { display: flex; flex-wrap: wrap; gap: 8px 22px; margin-top: 8px; color: var(--mint); font-size: 15px; }
+section.block { padding-block: 52px; }
+.block h2 { font-size: clamp(28px, 4vw, 40px); font-weight: 800; margin-bottom: 8px; }
+.block .sub { color: var(--muted); margin-bottom: 24px; max-width: 56ch; }
+.servs { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: 14px; }
+.serv { background: var(--soft); border-radius: 16px; padding: 20px; display: grid; gap: 8px; }
+.serv svg { width: 30px; height: 30px; fill: none; stroke: var(--teal); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.serv h3 { font-size: 18px; }
+.serv p { color: var(--muted); font-size: 15px; }
+.passos { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; list-style: none; padding: 0; margin: 0; counter-reset: p; }
+@media (max-width: 760px) { .passos { grid-template-columns: minmax(0, 1fr); } }
+.passos li { counter-increment: p; border: 1.5px solid var(--line); border-radius: 16px; padding: 20px; }
+.passos li::before { content: counter(p); display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; background: var(--orange); color: #FFFFFF; font-weight: 800; margin-bottom: 10px; }
+.passos p { color: var(--muted); font-size: 15px; }
+.orc { background: var(--mint); border-radius: 24px; padding: clamp(22px, 4vw, 40px); display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: 28px; }
+@media (max-width: 760px) { .orc { grid-template-columns: minmax(0, 1fr); } }
+form { display: grid; gap: 14px; }
+label { display: grid; gap: 6px; font-weight: 600; font-size: 15px; }
+select, input, textarea { width: 100%; border: 1.5px solid var(--line); border-radius: 12px; padding: 12px; background: #FFFFFF; color: var(--ink); }
+.urg { display: flex; flex-wrap: wrap; gap: 8px; }
+.urg button { min-height: 44px; padding: 0 16px; border-radius: 999px; border: 1.5px solid var(--teal); background: #FFFFFF; color: var(--teal); font-weight: 600; cursor: pointer; }
+.urg button[aria-pressed="true"] { background: var(--teal); color: #FFFFFF; }
+.erro { color: #A3341A; font-size: 14px; font-weight: 600; }
+.faq details { border-bottom: 1px solid var(--line); }
+.faq summary { cursor: pointer; padding-block: 16px; font-weight: 700; }
+.faq details p { color: var(--muted); padding-bottom: 16px; }
+.zap { position: fixed; right: 16px; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); width: 60px; height: 60px; border-radius: 50%; background: #1F9D55; color: #FFFFFF; display: grid; place-items: center; box-shadow: 0 8px 20px rgba(0,0,0,0.25); }
+.zap svg { width: 30px; height: 30px; }
+footer { background: var(--teal-d); color: var(--mint); font-size: 15px; }
+footer .wrap { padding-block: 28px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; }
+</style>
+</head>
+<body>
+<div class="bcbar"><span>Este é um modelo de site feito pela <b>BC Faz</b></span><a href="../index.html#p-site-profissional">Quero um assim</a></div>
+
+<header class="top">
+  <div class="wrap">
+    <div class="logo"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2L4 14h7l-1 8 9-12h-7z" fill="#E8742C"/></svg>Fio Certo Elétrica</div>
+    <a class="btn btn-o" href="#orcamento">Pedir orçamento</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <h1>Eletricista de confiança, no horário combinado.</h1>
+    <p>Instalações, reparos e manutenção para casas e pequenos comércios. Orçamento sem compromisso pelo WhatsApp.</p>
+    <div class="acts"><a class="btn btn-o" href="#orcamento">Pedir orçamento</a><a class="btn btn-l" href="#servicos">Ver serviços</a></div>
+    <div class="selos"><span>Atendo a cidade toda e região</span><span>Segunda a sábado</span><span>Garantia de 90 dias no serviço</span></div>
+  </div>
+</section>
+
+<main class="wrap">
+  <section class="block" id="servicos">
+    <h2>Serviços</h2>
+    <p class="sub">Do chuveiro que queimou ao quadro de energia da loja. Se não estiver na lista, pergunte.</p>
+    <div class="servs">
+      <div class="serv"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="3" width="12" height="18" rx="2"/><path d="M10 9v2M14 9v2M10 15h4"/></svg><h3>Tomadas e interruptores</h3><p>Instalação, troca e mudança de lugar.</p></div>
+      <div class="serv"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h14M8 4v4a4 4 0 0 0 8 0V4M9 16v2M12 15v4M15 16v2"/></svg><h3>Chuveiro e resistência</h3><p>Troca de resistência e instalação de chuveiro novo.</p></div>
+      <div class="serv"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 7h8M8 11h8M8 15h3"/></svg><h3>Quadro de distribuição</h3><p>Montagem, troca de disjuntores e organização.</p></div>
+      <div class="serv"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-4 10.5c.8.8 1 1.5 1 2.5h6c0-1 .2-1.7 1-2.5A6 6 0 0 0 12 3z"/></svg><h3>Iluminação</h3><p>Lustres, spots, fita de LED e luz externa.</p></div>
+      <div class="serv"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><h3>Manutenção preventiva</h3><p>Revisão completa para evitar curto e conta alta.</p></div>
+      <div class="serv"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 21h18M5 21V9l7-5 7 5v12M10 21v-6h4v6"/></svg><h3>Pequenos comércios</h3><p>Instalação para lojas, salões e lanchonetes.</p></div>
+    </div>
+  </section>
+
+  <section class="block">
+    <h2>Como funciona</h2>
+    <p class="sub">Simples e combinado antes, sem surpresa no final.</p>
+    <ol class="passos">
+      <li><h3>Você conta o problema</h3><p>Pelo formulário ou direto no WhatsApp, com foto se puder.</p></li>
+      <li><h3>Receba o orçamento</h3><p>Valor e horário combinados antes de qualquer serviço.</p></li>
+      <li><h3>Serviço feito</h3><p>No dia marcado, com material de qualidade e local limpo no final.</p></li>
+    </ol>
+  </section>
+
+  <section class="block" id="orcamento">
+    <div class="orc">
+      <div><h2>Peça seu orçamento</h2><p class="sub" style="margin-top:8px">Preencha e envie. A resposta chega no seu WhatsApp.</p></div>
+      <form id="form" novalidate>
+        <label for="tipo">Serviço<select id="tipo"><option>Tomadas e interruptores</option><option>Chuveiro e resistência</option><option>Quadro de distribuição</option><option>Iluminação</option><option>Manutenção preventiva</option><option>Outro</option></select></label>
+        <label for="desc">Conte o que está acontecendo<textarea id="desc" rows="3" placeholder="Ex.: o disjuntor desarma quando ligo o chuveiro"></textarea></label>
+        <label for="bairro">Bairro<input id="bairro" autocomplete="address-level3"></label>
+        <div><span style="font-weight:600;font-size:15px">Para quando?</span><div class="urg" id="urg" role="group" aria-label="Urgência" style="margin-top:6px">
+          <button type="button" data-u="Hoje, é urgente" aria-pressed="false">Hoje</button>
+          <button type="button" data-u="Nesta semana" aria-pressed="true">Nesta semana</button>
+          <button type="button" data-u="Sem pressa" aria-pressed="false">Sem pressa</button>
+        </div></div>
+        <p class="erro" id="erro" hidden>Conte o que está acontecendo e o bairro para pedir o orçamento.</p>
+        <button class="btn btn-o" type="submit">Enviar pelo WhatsApp</button>
+      </form>
+    </div>
+  </section>
+
+  <section class="block faq">
+    <h2>Perguntas frequentes</h2>
+    <details><summary>Cobra a visita para o orçamento?</summary><p>Pela foto e descrição, o orçamento é gratuito. Se precisar ir até o local, a visita é descontada do serviço.</p></details>
+    <details><summary>Quais formas de pagamento?</summary><p>Pix, dinheiro ou cartão na maquininha.</p></details>
+    <details><summary>O serviço tem garantia?</summary><p>Sim, 90 dias de garantia na mão de obra.</p></details>
+  </section>
+</main>
+
+<footer><div class="wrap"><span>Fio Certo Elétrica · Segunda a sábado, 7h às 18h</span><span>Negócio fictício, criado para mostrar o modelo.</span></div></footer>
+<a class="zap" href="https://wa.me/?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20preciso%20de%20um%20eletricista." target="_blank" rel="noopener" aria-label="Falar no WhatsApp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 0 1-13.4 7.9L3 21l1.2-4.4A9 9 0 1 1 21 12z"/></svg></a>
+
+<script>
+let urg = 'Nesta semana';
+document.getElementById('urg').addEventListener('click', (e) => {
+  const b = e.target.closest('[data-u]'); if (!b) return;
+  urg = b.dataset.u;
+  document.querySelectorAll('#urg button').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+});
+document.getElementById('form').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const desc = document.getElementById('desc').value.trim(), bairro = document.getElementById('bairro').value.trim();
+  if (!desc || !bairro) { document.getElementById('erro').hidden = false; return; }
+  document.getElementById('erro').hidden = true;
+  const msg = 'Olá! Quero um orçamento.\nServiço: ' + document.getElementById('tipo').value + '\nO que acontece: ' + desc + '\nBairro: ' + bairro + '\nPara quando: ' + urg;
+  window.location.href = 'https://wa.me/?text=' + encodeURIComponent(msg);
+});
+</script>
+</body>
+</html>

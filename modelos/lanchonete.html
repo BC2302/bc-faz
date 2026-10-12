@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sabor da Esquina · Modelo BC Faz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700;800&display=swap">
+<style>
+:root { --red: #C8361E; --red-d: #A42B17; --mus: #F2B33D; --cream: #FFF8EE; --card: #FFFFFF; --ink: #2A1A12; --muted: #6E5A4E; --line: #F0E2CF; --ok: #1F7A45; }
+* { box-sizing: border-box; }
+html { color-scheme: light; scroll-behavior: smooth; }
+body { margin: 0; background: var(--cream); color: var(--ink); font-family: "Rubik", system-ui, sans-serif; font-size: 16px; line-height: 1.5; padding-bottom: 96px; }
+[hidden] { display: none !important; }
+h1, h2, h3 { margin: 0; line-height: 1.1; }
+p { margin: 0; }
+button, input, textarea { font: inherit; }
+:focus-visible { outline: 3px solid var(--mus); outline-offset: 2px; }
+.bcbar { background: #1A1A1A; color: #FFFFFF; font-size: 13px; padding: 8px 16px; display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+.bcbar b { color: #FFC629; }
+.bcbar a { color: #FFC629; font-weight: 600; }
+.wrap { max-width: 980px; margin-inline: auto; padding-inline: 16px; }
+header.top { background: var(--red); color: #FFFFFF; }
+.top-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-block: 14px; }
+.logo { font-weight: 800; font-size: 24px; letter-spacing: -0.02em; }
+.logo span { color: var(--mus); }
+.open { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; background: rgba(255,255,255,0.14); padding: 6px 12px; border-radius: 999px; }
+.open i { width: 8px; height: 8px; border-radius: 50%; background: #7CF0A6; }
+.hero { background: var(--red); color: #FFFFFF; padding-block: 24px 40px; }
+.hero h1 { font-size: clamp(32px, 6vw, 52px); font-weight: 800; letter-spacing: -0.02em; max-width: 16ch; }
+.hero p { margin-top: 12px; color: #FFE3DA; font-size: 18px; max-width: 42ch; }
+.facts { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+.fact { background: var(--mus); color: var(--ink); font-weight: 500; font-size: 14px; padding: 8px 14px; border-radius: 10px; }
+.tabs { position: sticky; top: 0; z-index: 5; background: var(--cream); border-bottom: 1px solid var(--line); }
+.tabs-row { display: flex; gap: 8px; overflow-x: auto; padding-block: 12px; }
+.tab { flex-shrink: 0; min-height: 42px; padding: 0 18px; border-radius: 999px; border: 2px solid var(--ink); background: transparent; color: var(--ink); font-weight: 500; cursor: pointer; }
+.tab[aria-pressed="true"] { background: var(--ink); color: var(--cream); }
+.menu { padding-block: 24px; display: grid; gap: 28px; }
+.menu h2 { font-size: 24px; font-weight: 800; margin-bottom: 12px; }
+.items { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 290px), 1fr)); gap: 12px; }
+.item { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 16px; display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: 14px; align-items: start; }
+.pic { width: 64px; height: 64px; border-radius: 12px; display: grid; place-items: center; font-weight: 800; font-size: 22px; color: #FFFFFF; }
+.item h3 { font-size: 17px; font-weight: 700; }
+.item p { color: var(--muted); font-size: 14px; margin-top: 4px; }
+.item-foot { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; gap: 8px; }
+.price { font-weight: 700; font-size: 17px; font-variant-numeric: tabular-nums; }
+.add { min-height: 40px; padding: 0 16px; border-radius: 10px; border: 0; background: var(--red); color: #FFFFFF; font-weight: 600; cursor: pointer; }
+.add:hover { background: var(--red-d); }
+.info { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 12px; padding-block: 12px 32px; }
+.box { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 18px; }
+.box h3 { font-size: 16px; margin-bottom: 6px; }
+.box p { color: var(--muted); font-size: 15px; }
+.cartbar { position: fixed; left: 0; right: 0; bottom: 0; padding: 12px 16px calc(12px + env(safe-area-inset-bottom, 0px)); background: linear-gradient(transparent, var(--cream) 30%); }
+.cartbar button { width: 100%; max-width: 560px; margin-inline: auto; display: flex; justify-content: space-between; align-items: center; min-height: 56px; padding: 0 20px; border: 0; border-radius: 14px; background: var(--ink); color: #FFFFFF; font-weight: 600; font-size: 16px; cursor: pointer; }
+.cartbar b { color: var(--mus); font-variant-numeric: tabular-nums; }
+.sheet { position: fixed; inset: 0; background: rgba(42, 26, 18, 0.5); z-index: 20; display: flex; align-items: flex-end; justify-content: center; }
+.sheet-in { background: var(--cream); width: 100%; max-width: 560px; max-height: 88vh; overflow-y: auto; border-radius: 20px 20px 0 0; padding: 20px 20px calc(20px + env(safe-area-inset-bottom, 0px)); display: grid; gap: 14px; }
+.sheet-head { display: flex; justify-content: space-between; align-items: center; }
+.sheet-head h2 { font-size: 22px; }
+.x { width: 44px; height: 44px; border-radius: 50%; border: 0; background: var(--line); cursor: pointer; font-size: 20px; }
+.line { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; gap: 10px; align-items: center; padding-block: 8px; border-bottom: 1px solid var(--line); }
+.qty { display: inline-flex; align-items: center; gap: 6px; }
+.qty button { width: 36px; height: 36px; border-radius: 50%; border: 1.5px solid var(--ink); background: transparent; cursor: pointer; font-weight: 700; }
+.total { display: flex; justify-content: space-between; font-weight: 700; font-size: 18px; font-variant-numeric: tabular-nums; }
+label { font-weight: 500; font-size: 14px; display: grid; gap: 6px; }
+input, textarea { width: 100%; border: 1.5px solid var(--line); border-radius: 10px; padding: 12px; background: var(--card); color: var(--ink); }
+.send { min-height: 54px; border: 0; border-radius: 14px; background: var(--ok); color: #FFFFFF; font-weight: 700; font-size: 16px; cursor: pointer; text-decoration: none; display: grid; place-items: center; }
+footer { text-align: center; color: var(--muted); font-size: 14px; padding-block: 8px 24px; }
+</style>
+</head>
+<body>
+<div class="bcbar"><span>Este é um modelo de site feito pela <b>BC Faz</b></span><a href="../index.html#p-site-lanchonete">Quero um assim</a></div>
+
+<header class="top">
+  <div class="wrap top-row">
+    <div class="logo">Sabor da <span>Esquina</span></div>
+    <span class="open"><i></i>Aberto agora</span>
+  </div>
+</header>
+<section class="hero">
+  <div class="wrap">
+    <h1>O lanche do bairro, quentinho na sua casa.</h1>
+    <p>Monte seu pedido aqui e envie direto pelo WhatsApp. Sem aplicativo, sem taxa escondida.</p>
+    <div class="facts">
+      <span class="fact">Entrega em 30 a 45 min</span>
+      <span class="fact">Taxa de entrega R$ 5</span>
+      <span class="fact">Pix, cartão ou dinheiro</span>
+    </div>
+  </div>
+</section>
+
+<nav class="tabs" aria-label="Categorias do cardápio"><div class="wrap tabs-row" id="tabs"></div></nav>
+<main class="wrap menu" id="menu"></main>
+
+<section class="wrap info" aria-label="Informações">
+  <div class="box"><h3>Horário</h3><p>Terça a domingo, das 18h às 23h30</p></div>
+  <div class="box"><h3>Endereço</h3><p>Rua das Flores, 120, Centro. Retirada no balcão sem taxa.</p></div>
+  <div class="box"><h3>Pagamento</h3><p>Pix na entrega, cartão na maquininha ou dinheiro com troco.</p></div>
+</section>
+<footer>Sabor da Esquina é um negócio fictício, criado para mostrar o modelo.</footer>
+
+<div class="cartbar" id="cartbar" hidden><button type="button" id="open-cart"><span id="cart-count">Ver pedido</span><b id="cart-total">R$ 0,00</b></button></div>
+
+<div class="sheet" id="sheet" hidden role="dialog" aria-modal="true" aria-labelledby="sheet-title">
+  <div class="sheet-in">
+    <div class="sheet-head"><h2 id="sheet-title">Seu pedido</h2><button class="x" type="button" id="close-cart" aria-label="Fechar">×</button></div>
+    <div id="lines"></div>
+    <div class="total"><span>Total com entrega</span><span id="sum"></span></div>
+    <label for="nome">Seu nome<input id="nome" autocomplete="name" placeholder="Como podemos te chamar?"></label>
+    <label for="end">Endereço de entrega<textarea id="end" rows="2" placeholder="Rua, número e ponto de referência"></textarea></label>
+    <a class="send" id="send" href="https://wa.me/" target="_blank" rel="noopener">Enviar pedido no WhatsApp</a>
+  </div>
+</div>
+
+<script>
+const ENTREGA = 5;
+const CARDAPIO = [
+  { cat: 'Lanches', cor: '#C8361E', itens: [
+    ['X-Esquina', 'Pão brioche, hambúrguer 150g, queijo, bacon e molho da casa', 26],
+    ['X-Salada', 'Hambúrguer 120g, queijo, alface, tomate e maionese', 19],
+    ['X-Frango', 'Filé de frango grelhado, queijo, alface e tomate', 22],
+    ['Misto quente', 'Pão de forma, presunto e queijo na chapa', 10] ] },
+  { cat: 'Porções', cor: '#D9822B', itens: [
+    ['Batata frita', 'Porção individual com cheddar opcional', 14],
+    ['Calabresa acebolada', 'Serve duas pessoas, com pão', 28],
+    ['Isca de frango', 'Empanada, com molho de alho', 30] ] },
+  { cat: 'Bebidas', cor: '#2F7A6B', itens: [
+    ['Refrigerante lata', 'Coca, Guaraná ou Fanta, 350 ml', 6],
+    ['Suco natural', 'Laranja, maracujá ou acerola, 400 ml', 8],
+    ['Água mineral', 'Com ou sem gás, 500 ml', 4] ] }
+];
+const brl = (n) => n.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+const cart = new Map();
+let aba = 'Todos';
+
+function renderTabs() {
+  const nomes = ['Todos'].concat(CARDAPIO.map((c) => c.cat));
+  document.getElementById('tabs').innerHTML = nomes.map((n) => '<button class="tab" type="button" aria-pressed="' + (n === aba) + '" data-tab="' + n + '">' + n + '</button>').join('');
+}
+function renderMenu() {
+  document.getElementById('menu').innerHTML = CARDAPIO.filter((c) => aba === 'Todos' || c.cat === aba).map((c) =>
+    '<section><h2>' + c.cat + '</h2><div class="items">' + c.itens.map(([n, d, p]) =>
+      '<article class="item"><div class="pic" style="background:' + c.cor + '" aria-hidden="true">' + n.charAt(0) + '</div><div><h3>' + n + '</h3><p>' + d + '</p>' +
+      '<div class="item-foot"><span class="price">' + brl(p) + '</span><button class="add" type="button" data-add="' + n + '" data-preco="' + p + '">Adicionar</button></div></div></article>').join('') +
+    '</div></section>').join('');
+}
+function renderCart() {
+  let qtd = 0, sub = 0;
+  cart.forEach((v) => { qtd += v.q; sub += v.q * v.p; });
+  document.getElementById('cartbar').hidden = qtd === 0;
+  document.getElementById('cart-count').textContent = 'Ver pedido (' + qtd + (qtd === 1 ? ' item)' : ' itens)');
+  document.getElementById('cart-total').textContent = brl(sub);
+  document.getElementById('lines').innerHTML = Array.from(cart.entries()).map(([n, v]) =>
+    '<div class="line"><span>' + n + '</span><span class="qty"><button type="button" data-menos="' + n + '" aria-label="Tirar um ' + n + '">−</button>' + v.q +
+    '<button type="button" data-mais="' + n + '" aria-label="Mais um ' + n + '">+</button></span><span>' + brl(v.q * v.p) + '</span></div>').join('');
+  document.getElementById('sum').textContent = brl(sub + (qtd ? ENTREGA : 0));
+  if (!qtd) document.getElementById('sheet').hidden = true;
+  atualizarLink();
+}
+function atualizarLink() {
+  const linhas = Array.from(cart.entries()).map(([n, v]) => v.q + 'x ' + n + ' (' + brl(v.q * v.p) + ')');
+  let sub = 0; cart.forEach((v) => { sub += v.q * v.p; });
+  const msg = 'Olá! Quero fazer um pedido:\n' + linhas.join('\n') + '\nEntrega: ' + brl(ENTREGA) + '\nTotal: ' + brl(sub + ENTREGA) +
+    '\n\nNome: ' + (document.getElementById('nome').value || '-') + '\nEndereço: ' + (document.getElementById('end').value || '-');
+  document.getElementById('send').href = 'https://wa.me/?text=' + encodeURIComponent(msg);
+}
+document.getElementById('tabs').addEventListener('click', (e) => { const b = e.target.closest('[data-tab]'); if (b) { aba = b.dataset.tab; renderTabs(); renderMenu(); } });
+document.getElementById('menu').addEventListener('click', (e) => {
+  const b = e.target.closest('[data-add]'); if (!b) return;
+  const n = b.dataset.add, atual = cart.get(n) || { q: 0, p: +b.dataset.preco };
+  atual.q++; cart.set(n, atual); renderCart();
+  b.textContent = 'Adicionado'; setTimeout(() => { b.textContent = 'Adicionar'; }, 900);
+});
+document.getElementById('lines').addEventListener('click', (e) => {
+  const mais = e.target.closest('[data-mais]'), menos = e.target.closest('[data-menos]');
+  if (mais) cart.get(mais.dataset.mais).q++;
+  if (menos) { const v = cart.get(menos.dataset.menos); v.q--; if (v.q <= 0) cart.delete(menos.dataset.menos); }
+  renderCart();
+});
+document.getElementById('open-cart').addEventListener('click', () => { document.getElementById('sheet').hidden = false; });
+document.getElementById('close-cart').addEventListener('click', () => { document.getElementById('sheet').hidden = true; });
+document.getElementById('sheet').addEventListener('click', (e) => { if (e.target.id === 'sheet') e.target.hidden = true; });
+document.getElementById('nome').addEventListener('input', atualizarLink);
+document.getElementById('end').addEventListener('input', atualizarLink);
+renderTabs(); renderMenu(); renderCart();
+</script>
+</body>
+</html>

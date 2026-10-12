@@ -302,7 +302,9 @@ svg.thumb-svg .i { fill: currentColor; }
 const WHATSAPP = '';
 
 // Categorias: adicione aqui, ex.: { id: 'redes', nome: 'Redes sociais' }
-const CATS = [];
+const CATS = [
+  { id: 'sites', nome: 'Sites personalizados' }
+];
 
 const ART = {
   posts: '<rect x="34" y="10" width="52" height="100" rx="9"/><rect class="a" x="41" y="28" width="11" height="11" rx="2"/><rect x="54.5" y="28" width="11" height="11" rx="2"/><rect x="68" y="28" width="11" height="11" rx="2"/><rect x="41" y="42" width="11" height="11" rx="2"/><rect class="a" x="54.5" y="42" width="11" height="11" rx="2"/><rect x="68" y="42" width="11" height="11" rx="2"/><rect x="41" y="56" width="11" height="11" rx="2"/><rect x="54.5" y="56" width="11" height="11" rx="2"/><rect class="a" x="68" y="56" width="11" height="11" rx="2"/><path d="M52 98h16"/>',
@@ -319,11 +321,45 @@ const ART = {
   kit: '<path class="a" d="M18 42l42-20 42 20-42 20z"/><path d="M18 42v42l42 22 42-22V42M60 62v44"/>'
 };
 const svg = (k) => '<svg class="thumb-svg" viewBox="0 0 120 120" aria-hidden="true">' + ART[k] + '</svg>';
+// Miniatura de site no estilo do modelo
+const mockSvg = (m) => '<svg class="thumb-svg" viewBox="0 0 120 120" aria-hidden="true" style="width:70%">' +
+  '<rect x="10" y="18" width="100" height="84" rx="7" style="fill:' + m.bg + '"/>' +
+  '<path d="M10 32V25a7 7 0 0 1 7-7h86a7 7 0 0 1 7 7v7z" style="fill:' + m.top + '" stroke="none"/>' +
+  '<rect x="20" y="40" width="80" height="24" rx="4" style="fill:' + m.hero + '" stroke="none"/>' +
+  '<rect x="20" y="72" width="24" height="20" rx="3"/><rect x="48" y="72" width="24" height="20" rx="3"/><rect x="76" y="72" width="24" height="20" rx="3"/>' +
+  '<rect x="10" y="18" width="100" height="84" rx="7"/></svg>';
+const thumbArt = (i) => i.mock ? mockSvg(i.mock) : svg(i.art);
 
 // Serviços: adicione aqui, um por linha, conforme forem definidos
-const ITENS = [];
+const ITENS = [
+  { id: 'site-lanchonete', cat: 'sites', selo: 'Modelo', mock: { top: '#C8361E', hero: '#F2B33D', bg: '#FFF8EE' }, demo: 'modelos/lanchonete.html',
+    nome: 'Site para lanchonete e delivery', prazo: 5,
+    desc: 'Cardápio completo com carrinho que manda o pedido pronto no WhatsApp.',
+    detalhe: 'O cliente escolhe os lanches, monta o pedido e envia direto para o seu WhatsApp, já com nome, endereço e total. Adaptamos com sua marca, seu cardápio e seus preços.',
+    inclui: ['Cardápio por categorias', 'Carrinho com pedido pelo WhatsApp', 'Horário, endereço e formas de pagamento', 'Sua marca, seus produtos e seus preços'], combina: ['site-loja', 'site-sob-medida'] },
+  { id: 'site-salao', cat: 'sites', selo: 'Modelo', mock: { top: '#2F4A3A', hero: '#E9B8B0', bg: '#FBF6F3' }, demo: 'modelos/salao.html',
+    nome: 'Site para salão de beleza e barbearia', prazo: 5,
+    desc: 'Serviços, equipe e pedido de horário pelo WhatsApp.',
+    detalhe: 'Mostra seus serviços com duração e preço, apresenta a equipe e deixa o cliente pedir um horário escolhendo serviço, dia e período. Serve para salão, barbearia, manicure e estética.',
+    inclui: ['Lista de serviços com duração e preço', 'Pedido de horário pelo WhatsApp', 'Apresentação da equipe', 'Galeria com fotos dos seus trabalhos'], combina: ['site-profissional', 'site-sob-medida'] },
+  { id: 'site-loja', cat: 'sites', selo: 'Modelo', mock: { top: '#1F2A44', hero: '#E3A72F', bg: '#F6F5F2' }, demo: 'modelos/loja.html',
+    nome: 'Site catálogo para loja', prazo: 6,
+    desc: 'Vitrine de produtos com busca, filtros e compra pelo WhatsApp.',
+    detalhe: 'Seus produtos numa vitrine organizada, com busca, categorias e escolha de cor e tamanho. O pedido chega no seu WhatsApp com tudo que o cliente escolheu.',
+    inclui: ['Vitrine com fotos e preços', 'Busca e filtro por categoria', 'Escolha de cor e tamanho', 'Compra pelo WhatsApp'], combina: ['site-lanchonete', 'site-sob-medida'] },
+  { id: 'site-profissional', cat: 'sites', selo: 'Modelo', mock: { top: '#0F5E5A', hero: '#D9EFEA', bg: '#FFFFFF' }, demo: 'modelos/profissional.html',
+    nome: 'Site para profissional autônomo', prazo: 4,
+    desc: 'Para eletricista, diarista, professor e outros prestadores de serviço.',
+    detalhe: 'Apresenta seus serviços, explica como você trabalha e traz um formulário de orçamento que chega no seu WhatsApp com o problema, o bairro e a urgência.',
+    inclui: ['Serviços e área de atendimento', 'Orçamento pelo WhatsApp', 'Perguntas frequentes', 'Botão de WhatsApp sempre visível'], combina: ['site-salao', 'site-sob-medida'] },
+  { id: 'site-sob-medida', cat: 'sites', art: 'pagina', nome: 'Site sob medida', prazo: 7,
+    desc: 'Não achou um modelo para o seu negócio? Criamos do zero.',
+    detalhe: 'Conversamos para entender seu negócio, mostramos a proposta de visual antes de começar e construímos as páginas que você precisar, com os ajustes incluídos até você aprovar.',
+    inclui: ['Conversa para entender seu negócio', 'Proposta de visual antes de começar', 'As páginas que você precisar', 'Ajustes até aprovar'], combina: ['site-lanchonete', 'site-profissional'] }
+];
 
 const SLIDES = [
+  { tag: 'Sites personalizados', titulo: 'Seu negócio com site próprio.', texto: 'Escolha um modelo, teste como se fosse seu e a gente adapta com sua marca, seus produtos e seu WhatsApp.', alvo: 'site-lanchonete', art: 'pagina' },
   { tag: 'BC Faz', titulo: 'Seu negócio pronto para vender.', texto: 'Logo, cardápio digital, posts e planilhas feitos sob medida para quem está começando. Você cuida dos clientes, a BC faz o resto.', art: 'kit' }
 ];
 
@@ -341,7 +377,7 @@ function linkWA(msg) {
 
 function card(i) {
   return '<a class="card" href="#p-' + i.id + '">' +
-    '<div class="thumb">' + (i.selo ? '<span class="selo">' + esc(i.selo) + '</span>' : '') + svg(i.art) + '</div>' +
+    '<div class="thumb">' + (i.selo ? '<span class="selo">' + esc(i.selo) + '</span>' : '') + thumbArt(i) + '</div>' +
     '<div class="card-body">' +
     '<h3>' + esc(i.nome) + '</h3>' +
     '<div class="consulta">Sob consulta</div>' +
@@ -427,7 +463,7 @@ function renderProduto(i) {
     '<nav class="crumbs" aria-label="Caminho"><a href="#inicio">Início</a><span aria-hidden="true">›</span>' +
     '<a href="#catalogo" data-cat-link="' + i.cat + '">' + esc(catNome(i.cat)) + '</a><span aria-hidden="true">›</span><span>' + esc(i.nome) + '</span></nav>' +
     '<section class="pdp">' +
-    '<div class="thumb">' + (i.selo ? '<span class="selo">' + esc(i.selo) + '</span>' : '') + svg(i.art) + '</div>' +
+    '<div class="thumb">' + (i.selo ? '<span class="selo">' + esc(i.selo) + '</span>' : '') + thumbArt(i) + '</div>' +
     '<div class="buy">' +
     '<span class="cat-label">' + esc(catNome(i.cat)) + '</span>' +
     '<h1>' + esc(i.nome) + '</h1>' +
@@ -437,12 +473,13 @@ function renderProduto(i) {
     '<ul>' + i.inclui.map((t) => '<li>' + ICON_OK + '<span>' + esc(t) + '</span></li>').join('') + '</ul>' +
     '<div class="actions">' +
     '<a class="btn btn-primary" href="' + linkWA(msg) + '" target="_blank" rel="noopener">Pedir orçamento no WhatsApp</a>' +
+    (i.demo ? '<a class="btn btn-ghost" href="' + i.demo + '" target="_blank" rel="noopener">Ver o modelo funcionando</a>' : '') +
     '<a class="btn btn-ghost" href="#catalogo">Ver outros serviços</a></div>' +
     '<p class="note">Pagamento por Pix. Ajustes incluídos até você aprovar.</p>' +
     '</div></section>' +
     '<section class="desc"><h2>Descrição</h2><p>' + esc(i.detalhe) + '</p></section>' +
-    '<section class="shelf"><div class="shelf-head"><h2>Combina com este serviço</h2></div>' +
-    '<div class="products">' + juntos.map(card).join('') + '</div></section>';
+    (juntos.length ? '<section class="shelf"><div class="shelf-head"><h2>Veja também</h2></div>' +
+    '<div class="products">' + juntos.map(card).join('') + '</div></section>' : '');
 }
 
 // Navegação pelo endereço (#p-logo, #catalogo...)

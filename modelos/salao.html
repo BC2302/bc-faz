@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Studio Lírio · Modelo BC Faz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Karla:wght@400;500;700&display=swap">
+<style>
+:root { --sage: #2F4A3A; --sage-l: #DCE6DE; --rose: #E9B8B0; --rose-d: #B5655A; --bg: #FBF6F3; --card: #FFFFFF; --ink: #1F2A24; --muted: #5C6660; --line: #EBDDD6; }
+* { box-sizing: border-box; }
+html { color-scheme: light; scroll-behavior: smooth; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: "Karla", system-ui, sans-serif; font-size: 17px; line-height: 1.55; }
+[hidden] { display: none !important; }
+h1, h2, h3 { font-family: "Fraunces", Georgia, serif; font-weight: 500; margin: 0; line-height: 1.1; }
+p { margin: 0; }
+button, input, select { font: inherit; }
+:focus-visible { outline: 3px solid var(--rose-d); outline-offset: 2px; }
+.bcbar { background: #1A1A1A; color: #FFFFFF; font-size: 13px; padding: 8px 16px; display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+.bcbar b { color: #FFC629; }
+.bcbar a { color: #FFC629; font-weight: 700; }
+.wrap { max-width: 1040px; margin-inline: auto; padding-inline: 16px; }
+header.top .wrap { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding-block: 18px; }
+.logo { font-family: "Fraunces", serif; font-size: 26px; font-weight: 700; color: var(--sage); }
+.logo small { display: block; font-family: "Karla", sans-serif; font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); font-weight: 500; }
+nav.links { display: flex; gap: 22px; font-weight: 500; }
+nav.links a { color: var(--ink); text-decoration: none; }
+@media (max-width: 680px) { nav.links .hide { display: none; } }
+.cta { display: inline-flex; align-items: center; min-height: 46px; padding: 0 22px; border-radius: 999px; background: var(--sage); color: #FFFFFF; text-decoration: none; font-weight: 700; border: 0; cursor: pointer; }
+.hero { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); gap: 40px; align-items: center; padding-block: 32px 56px; }
+@media (max-width: 760px) { .hero { grid-template-columns: minmax(0, 1fr); } }
+.hero h1 { font-size: clamp(38px, 6vw, 64px); color: var(--sage); }
+.hero h1 em { font-style: italic; color: var(--rose-d); }
+.hero p { margin-top: 16px; color: var(--muted); max-width: 40ch; font-size: 19px; }
+.hero .cta { margin-top: 24px; }
+.arch { aspect-ratio: 4 / 5; max-width: 100%; border-radius: 200px 200px 24px 24px; background: var(--rose); position: relative; overflow: hidden; }
+.arch::before { content: ""; position: absolute; width: 70%; aspect-ratio: 1; border-radius: 50%; background: var(--sage); left: 15%; bottom: -20%; }
+.arch::after { content: ""; position: absolute; width: 34%; aspect-ratio: 1; border-radius: 50%; background: var(--bg); left: 33%; top: 22%; }
+section.block { padding-block: 48px; }
+.block h2 { font-size: clamp(30px, 4vw, 42px); color: var(--sage); margin-bottom: 24px; }
+.servs { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 16px; }
+.grupo { background: var(--card); border: 1px solid var(--line); border-radius: 20px; padding: 22px; }
+.grupo h3 { font-size: 24px; margin-bottom: 10px; }
+.serv { display: flex; justify-content: space-between; gap: 12px; padding-block: 10px; border-top: 1px dashed var(--line); }
+.serv span small { display: block; color: var(--muted); font-size: 14px; }
+.serv b { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.team { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap: 16px; }
+.pessoa { display: flex; gap: 14px; align-items: center; background: var(--sage-l); border-radius: 20px; padding: 18px; }
+.ini { width: 60px; height: 60px; border-radius: 50%; background: var(--sage); color: #FFFFFF; display: grid; place-items: center; font-family: "Fraunces", serif; font-size: 22px; flex-shrink: 0; }
+.pessoa small { color: var(--muted); display: block; }
+.gal { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.gal div { aspect-ratio: 1; border-radius: 18px; display: grid; place-items: center; color: var(--muted); font-size: 14px; text-align: center; padding: 10px; }
+.gal div:nth-child(odd) { background: var(--rose); color: #5A2E28; }
+.gal div:nth-child(even) { background: var(--sage-l); }
+.agenda { background: var(--sage); color: #FFFFFF; border-radius: 28px; padding: clamp(22px, 4vw, 44px); display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 32px; }
+@media (max-width: 760px) { .agenda { grid-template-columns: minmax(0, 1fr); } }
+.agenda h2 { color: #FFFFFF; }
+.agenda p { color: #DCE6DE; }
+form { display: grid; gap: 14px; }
+label { display: grid; gap: 6px; font-weight: 500; font-size: 15px; }
+select, input { min-height: 48px; border-radius: 12px; border: 0; padding: 0 14px; background: #FFFFFF; color: var(--ink); width: 100%; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { min-height: 44px; padding: 0 18px; border-radius: 999px; border: 1.5px solid #FFFFFF; background: transparent; color: #FFFFFF; cursor: pointer; font-weight: 500; }
+.chip[aria-pressed="true"] { background: var(--rose); color: var(--ink); border-color: var(--rose); }
+.go { min-height: 52px; border: 0; border-radius: 999px; background: var(--rose); color: var(--ink); font-weight: 700; font-size: 17px; cursor: pointer; }
+.erro { color: #FFD9D3; font-size: 14px; }
+footer { padding-block: 32px; color: var(--muted); font-size: 15px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; }
+</style>
+</head>
+<body>
+<div class="bcbar"><span>Este é um modelo de site feito pela <b>BC Faz</b></span><a href="../index.html#p-site-salao">Quero um assim</a></div>
+
+<header class="top">
+  <div class="wrap">
+    <div class="logo">Studio Lírio<small>Beleza e bem-estar</small></div>
+    <nav class="links" aria-label="Seções"><a class="hide" href="#servicos">Serviços</a><a class="hide" href="#equipe">Equipe</a><a class="cta" href="#agendar">Agendar</a></nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <div>
+      <h1>Cuidado que aparece <em>no espelho.</em></h1>
+      <p>Cabelo, unhas e sobrancelhas com hora marcada, sem fila e sem pressa. Escolha o serviço e peça seu horário pelo WhatsApp.</p>
+      <a class="cta" href="#agendar">Pedir meu horário</a>
+    </div>
+    <div class="arch" aria-hidden="true"></div>
+  </section>
+
+  <section class="block" id="servicos">
+    <h2>Serviços</h2>
+    <div class="servs" id="servs"></div>
+  </section>
+
+  <section class="block" id="equipe">
+    <h2>Quem cuida de você</h2>
+    <div class="team">
+      <div class="pessoa"><span class="ini">AM</span><div><strong>Ana Maria</strong><small>Corte, coloração e escova</small></div></div>
+      <div class="pessoa"><span class="ini">JS</span><div><strong>Júlia Souza</strong><small>Manicure e alongamento</small></div></div>
+      <div class="pessoa"><span class="ini">RL</span><div><strong>Rita Lopes</strong><small>Design de sobrancelhas</small></div></div>
+    </div>
+  </section>
+
+  <section class="block" aria-label="Galeria">
+    <h2>Nossos trabalhos</h2>
+    <div class="gal"><div>Foto do seu trabalho</div><div>Foto do seu trabalho</div><div>Foto do seu trabalho</div><div>Foto do seu trabalho</div><div>Foto do seu trabalho</div><div>Foto do seu trabalho</div></div>
+  </section>
+
+  <section class="block" id="agendar">
+    <div class="agenda">
+      <div>
+        <h2>Peça seu horário</h2>
+        <p style="margin-top:12px">Escolha o serviço, o dia e o período. Confirmamos o horário exato pelo WhatsApp em poucos minutos.</p>
+      </div>
+      <form id="form" novalidate>
+        <label for="serv">Serviço<select id="serv"></select></label>
+        <label for="dia">Dia<input id="dia" type="date"></label>
+        <div><span style="font-weight:500;font-size:15px">Período</span><div class="chips" role="group" aria-label="Período" id="periodos" style="margin-top:6px">
+          <button class="chip" type="button" data-p="Manhã" aria-pressed="false">Manhã</button>
+          <button class="chip" type="button" data-p="Tarde" aria-pressed="true">Tarde</button>
+          <button class="chip" type="button" data-p="Noite" aria-pressed="false">Noite</button>
+        </div></div>
+        <label for="nome">Seu nome<input id="nome" autocomplete="name"></label>
+        <p class="erro" id="erro" hidden>Escolha o dia e escreva seu nome para pedir o horário.</p>
+        <button class="go" type="submit">Pedir horário no WhatsApp</button>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap"><span>Rua das Acácias, 45 · Terça a sábado, 9h às 20h</span><span>Studio Lírio é um negócio fictício, criado para mostrar o modelo.</span></footer>
+
+<script>
+const SERVICOS = [
+  { g: 'Cabelo', itens: [['Corte feminino', '1h', 60], ['Escova', '45 min', 40], ['Coloração', '2h', 150], ['Hidratação', '1h', 70]] },
+  { g: 'Unhas', itens: [['Mão', '40 min', 30], ['Pé', '40 min', 35], ['Mão e pé', '1h20', 60], ['Alongamento em gel', '2h', 140]] },
+  { g: 'Sobrancelha', itens: [['Design', '30 min', 35], ['Design com henna', '45 min', 50], ['Brow lamination', '1h', 120]] }
+];
+const brl = (n) => n.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 0 });
+document.getElementById('servs').innerHTML = SERVICOS.map((s) => '<div class="grupo"><h3>' + s.g + '</h3>' +
+  s.itens.map(([n, d, p]) => '<div class="serv"><span>' + n + '<small>' + d + '</small></span><b>' + brl(p) + '</b></div>').join('') + '</div>').join('');
+document.getElementById('serv').innerHTML = SERVICOS.map((s) => '<optgroup label="' + s.g + '">' + s.itens.map(([n]) => '<option>' + n + '</option>').join('') + '</optgroup>').join('');
+const hoje = new Date(); hoje.setDate(hoje.getDate() + 1);
+document.getElementById('dia').min = hoje.toISOString().slice(0, 10);
+let periodo = 'Tarde';
+document.getElementById('periodos').addEventListener('click', (e) => {
+  const b = e.target.closest('[data-p]'); if (!b) return;
+  periodo = b.dataset.p;
+  document.querySelectorAll('#periodos .chip').forEach((c) => c.setAttribute('aria-pressed', String(c === b)));
+});
+document.getElementById('form').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const dia = document.getElementById('dia').value, nome = document.getElementById('nome').value.trim();
+  const erro = document.getElementById('erro');
+  if (!dia || !nome) { erro.hidden = false; return; }
+  erro.hidden = true;
+  const data = dia.split('-').reverse().join('/');
+  const msg = 'Olá! Sou ' + nome + ' e gostaria de agendar:\nServiço: ' + document.getElementById('serv').value + '\nDia: ' + data + '\nPeríodo: ' + periodo;
+  window.location.href = 'https://wa.me/?text=' + encodeURIComponent(msg);
+});
+</script>
+</body>
+</html>
