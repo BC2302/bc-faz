@@ -150,6 +150,10 @@ svg.thumb-svg .i { fill: currentColor; }
 .card:hover { transform: translateY(-2px); box-shadow: 0 2px 4px rgba(26, 26, 26, 0.08), 0 16px 32px -14px rgba(26, 26, 26, 0.3); }
 .thumb { position: relative; aspect-ratio: 1 / 1; max-width: 100%; background: var(--surface-2); display: grid; place-items: center; color: var(--ink); }
 .thumb svg { width: 52%; height: auto; }
+.thumb { overflow: hidden; }
+.thumb img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .3s ease; }
+.card:hover .thumb img { transform: scale(1.04); }
+.selo { z-index: 1; }
 .selo { position: absolute; top: 12px; left: 12px; background: var(--ink); color: var(--bg); font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: 6px; }
 .card-body { padding: 14px 16px 18px; display: flex; flex-direction: column; gap: 6px; border-top: 1px solid var(--line); flex: 1; }
 .card-body h3 { font-family: var(--font-body); font-weight: 500; font-size: 16px; letter-spacing: 0; line-height: 1.35; }
@@ -292,7 +296,7 @@ svg.thumb-svg .i { fill: currentColor; }
     <div class="contact">
       <span>Você vende, a BC faz.</span>
       <span>WhatsApp: <strong id="wa-texto">(00) 00000-0000</strong></span>
-      <span class="credit">by BC Tech.</span>
+      <span class="credit">by BC Tech. · Fotos: Unsplash</span>
     </div>
   </div>
 </footer>
@@ -328,31 +332,31 @@ const mockSvg = (m) => '<svg class="thumb-svg" viewBox="0 0 120 120" aria-hidden
   '<rect x="20" y="40" width="80" height="24" rx="4" style="fill:' + m.hero + '" stroke="none"/>' +
   '<rect x="20" y="72" width="24" height="20" rx="3"/><rect x="48" y="72" width="24" height="20" rx="3"/><rect x="76" y="72" width="24" height="20" rx="3"/>' +
   '<rect x="10" y="18" width="100" height="84" rx="7"/></svg>';
-const thumbArt = (i) => i.mock ? mockSvg(i.mock) : svg(i.art);
+const thumbArt = (i) => i.foto ? '<img src="https://images.unsplash.com/photo-' + i.foto + '?auto=format&fit=crop&w=600&h=600&q=70" alt="' + esc(i.fotoAlt || i.nome) + '" loading="lazy">' : (i.mock ? mockSvg(i.mock) : svg(i.art));
 
 // Serviços: adicione aqui, um por linha, conforme forem definidos
 const ITENS = [
-  { id: 'site-lanchonete', cat: 'sites', selo: 'Modelo', mock: { top: '#C8361E', hero: '#F2B33D', bg: '#FFF8EE' }, demo: 'modelos/lanchonete.html',
+  { id: 'site-lanchonete', foto: '1571091718767-18b5b1457add', fotoAlt: 'Hambúrguer artesanal sobre tábua de madeira', cat: 'sites', selo: 'Modelo', mock: { top: '#C8361E', hero: '#F2B33D', bg: '#FFF8EE' }, demo: 'modelos/lanchonete.html',
     nome: 'Site para lanchonete e delivery', prazo: 5,
     desc: 'Cardápio completo com carrinho que manda o pedido pronto no WhatsApp.',
     detalhe: 'O cliente escolhe os lanches, monta o pedido e envia direto para o seu WhatsApp, já com nome, endereço e total. Adaptamos com sua marca, seu cardápio e seus preços.',
     inclui: ['Cardápio por categorias', 'Carrinho com pedido pelo WhatsApp', 'Horário, endereço e formas de pagamento', 'Sua marca, seus produtos e seus preços'], combina: ['site-loja', 'site-sob-medida'] },
-  { id: 'site-salao', cat: 'sites', selo: 'Modelo', mock: { top: '#2F4A3A', hero: '#E9B8B0', bg: '#FBF6F3' }, demo: 'modelos/salao.html',
+  { id: 'site-salao', foto: '1580618672591-eb180b1a973f', fotoAlt: 'Cabeleireira fazendo escova em uma cliente', cat: 'sites', selo: 'Modelo', mock: { top: '#2F4A3A', hero: '#E9B8B0', bg: '#FBF6F3' }, demo: 'modelos/salao.html',
     nome: 'Site para salão de beleza e barbearia', prazo: 5,
     desc: 'Serviços, equipe e pedido de horário pelo WhatsApp.',
     detalhe: 'Mostra seus serviços com duração e preço, apresenta a equipe e deixa o cliente pedir um horário escolhendo serviço, dia e período. Serve para salão, barbearia, manicure e estética.',
     inclui: ['Lista de serviços com duração e preço', 'Pedido de horário pelo WhatsApp', 'Apresentação da equipe', 'Galeria com fotos dos seus trabalhos'], combina: ['site-profissional', 'site-sob-medida'] },
-  { id: 'site-loja', cat: 'sites', selo: 'Modelo', mock: { top: '#1F2A44', hero: '#E3A72F', bg: '#F6F5F2' }, demo: 'modelos/loja.html',
+  { id: 'site-loja', foto: '1648005539099-709d5be525fb', fotoAlt: 'Novelos de lã e agulha de crochê', cat: 'sites', selo: 'Modelo', mock: { top: '#1F2A44', hero: '#E3A72F', bg: '#F6F5F2' }, demo: 'modelos/loja.html',
     nome: 'Site catálogo para loja', prazo: 6,
     desc: 'Vitrine de produtos com busca, filtros e compra pelo WhatsApp.',
     detalhe: 'Seus produtos numa vitrine organizada, com busca, categorias e escolha de cor e tamanho. O pedido chega no seu WhatsApp com tudo que o cliente escolheu.',
     inclui: ['Vitrine com fotos e preços', 'Busca e filtro por categoria', 'Escolha de cor e tamanho', 'Compra pelo WhatsApp'], combina: ['site-lanchonete', 'site-sob-medida'] },
-  { id: 'site-profissional', cat: 'sites', selo: 'Modelo', mock: { top: '#0F5E5A', hero: '#D9EFEA', bg: '#FFFFFF' }, demo: 'modelos/profissional.html',
+  { id: 'site-profissional', foto: '1621905251189-08b45d6a269e', fotoAlt: 'Eletricista instalando fiação', cat: 'sites', selo: 'Modelo', mock: { top: '#0F5E5A', hero: '#D9EFEA', bg: '#FFFFFF' }, demo: 'modelos/profissional.html',
     nome: 'Site para profissional autônomo', prazo: 4,
     desc: 'Para eletricista, diarista, professor e outros prestadores de serviço.',
     detalhe: 'Apresenta seus serviços, explica como você trabalha e traz um formulário de orçamento que chega no seu WhatsApp com o problema, o bairro e a urgência.',
     inclui: ['Serviços e área de atendimento', 'Orçamento pelo WhatsApp', 'Perguntas frequentes', 'Botão de WhatsApp sempre visível'], combina: ['site-salao', 'site-sob-medida'] },
-  { id: 'site-sob-medida', cat: 'sites', art: 'pagina', nome: 'Site sob medida', prazo: 7,
+  { id: 'site-sob-medida', foto: '1603302576837-37561b2e2302', fotoAlt: 'Notebook com tela colorida sobre uma mesa de madeira', cat: 'sites', art: 'pagina', nome: 'Site sob medida', prazo: 7,
     desc: 'Não achou um modelo para o seu negócio? Criamos do zero.',
     detalhe: 'Conversamos para entender seu negócio, mostramos a proposta de visual antes de começar e construímos as páginas que você precisar, com os ajustes incluídos até você aprovar.',
     inclui: ['Conversa para entender seu negócio', 'Proposta de visual antes de começar', 'As páginas que você precisar', 'Ajustes até aprovar'], combina: ['site-lanchonete', 'site-profissional'] }
