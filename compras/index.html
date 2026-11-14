@@ -10,6 +10,8 @@
 <meta name="robots" content="noindex">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ctext y=%22.9em%22 font-size=%2290%22%3E🛒%3C/text%3E%3C/svg%3E">
 <title>BC Compras</title>
+<link rel="manifest" href="/manifest.json">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap">
 <style id="css">
 :root{--bg:#f5f4ee;--card:#fff;--ink:#1d2321;--muted:#6b7470;--line:#e6e4dc;--accent:#1f8a4c;--accent-2:#e7f4ec;--warn:#c4441c;--warn-2:#fbebe5;--amber:#b7791f;--r:14px;--shadow:0 1px 2px rgba(0,0,0,.04),0 4px 14px rgba(0,0,0,.05)}
@@ -138,6 +140,9 @@ textarea.in{min-height:200px;font-size:14px;resize:vertical}
 .login form{display:flex;flex-direction:column;gap:10px}
 .in.pin{text-align:center;font-size:24px;letter-spacing:8px;padding:14px}
 .lerr{margin-top:12px;color:var(--warn);font-weight:700}
+.inst{border:0;background:var(--accent);color:#fff;font-weight:800;font-size:12px;padding:5px 10px;border-radius:99px;white-space:nowrap}
+.steps{margin:0;padding-left:20px;line-height:1.6}
+.steps li{margin-bottom:6px}
 .foot{font-size:12px;color:var(--muted);text-align:center;margin-top:22px}
 </style>
 </head>
@@ -283,7 +288,7 @@ function render(){
   var a=document.activeElement,fid=a&&a.id,s1=null,s2=null;try{if(fid){s1=a.selectionStart;s2=a.selectionEnd;}}catch(e){}
   var open=[].map.call(document.querySelectorAll("details.buy[open]"),function(d){return d.dataset.id;});
   var pend=S.items.filter(function(i){return !i.checked;}).length;
-  var html='<div class="wrap"><header><div class="top"><h1><span>🛒</span>BC Compras</h1><div style="display:flex;gap:6px;align-items:center">'+pill()+'</div></div><nav class="tabs">'+
+  var html='<div class="wrap"><header><div class="top"><h1><span>🛒</span>BC Compras</h1><div style="display:flex;gap:6px;align-items:center">'+pill()+(standalone()?'':'<button class="inst" data-act="install">📲 Instalar</button>')+'</div></div><nav class="tabs">'+
     tab("lista","Lista",S.items.length?pend+"/"+S.items.length:"")+tab("frequentes","Frequentes","")+tab("historico","Histórico",S.history.length||"")+'</nav></header>';
   html+=view==="lista"?vLista():view==="frequentes"?vFreq():vHist();
   html+='</div>';
@@ -292,6 +297,7 @@ function render(){
   open.forEach(function(id){var d=document.querySelector('details.buy[data-id="'+id+'"]');if(d)d.open=true;});
   if(fid){var el=document.getElementById(fid);if(el){el.focus();try{if(s1!=null)el.setSelectionRange(s1,s2);}catch(e){}}}
 }
+function standalone(){try{return window.matchMedia("(display-mode: standalone)").matches||navigator.standalone===true;}catch(e){return false;}}
 function tab(id,label,badge){return '<button class="tab'+(view===id?" on":"")+'" data-act="tab" data-v="'+id+'">'+label+(badge!==""?'<small>'+badge+'</small>':"")+'</button>';}
 
 function vLista(){
@@ -393,6 +399,14 @@ document.addEventListener("click",function(e){
   if(act==="finish"){mFinish();return;}
   if(act==="mfinish"){var st=document.getElementById("mStore").value.trim(),dt=document.getElementById("mDate").value||today();closeModal();finish(st,dt);render();toast("Compra salva no histórico ✓");return;}
   if(act==="mclose"){closeModal();return;}
+  if(act==="install"){
+    if(installEvt){installEvt.prompt();installEvt.userChoice.then(function(c){installEvt=null;if(c&&c.outcome==="accepted")toast("Instalando o BC Compras ✓");});return;}
+    var ios=/iphone|ipad|ipod/i.test(navigator.userAgent);
+    modal('<h2>Instalar o BC Compras</h2>'+(ios?
+      '<ol class="steps"><li>Abra este link no <b>Safari</b>.</li><li>Toque no botão <b>Compartilhar</b> (o quadrado com a seta pra cima ⬆️).</li><li>Role e toque em <b>Adicionar à Tela de Início</b>.</li><li>Toque em <b>Adicionar</b>.</li></ol>':
+      '<ol class="steps"><li>Abra este link no <b>Google Chrome</b> (não dentro do WhatsApp, Instagram ou outro app).</li><li>Toque nos <b>3 pontinhos ⋮</b> no canto de cima.</li><li>Toque em <b>Instalar app</b> ou <b>Adicionar à tela inicial</b>.</li><li>Confirme em <b>Instalar</b>.</li></ol>')+
+      '<p style="margin-top:12px">O ícone verde do BC Compras vai aparecer junto com os seus outros aplicativos.</p><div class="btns"><button class="btn" data-act="mclose">Entendi</button></div>');
+    return;}
   if(act==="config"){mConfig();return;}
   if(act==="mlogout"){logout("");return;}
   if(act==="mpin"){var po=document.getElementById("mPinOld").value.trim(),pn=document.getElementById("mPinNew").value.trim();
@@ -435,6 +449,10 @@ document.addEventListener("keydown",function(e){
   if(e.key==="Enter"&&modalOpen&&e.target.id==="mBudget"){document.querySelector('[data-act="mbudget"]').click();}
 });
 
+var installEvt=null;
+window.addEventListener("beforeinstallprompt",function(e){e.preventDefault();installEvt=e;});
+window.addEventListener("appinstalled",function(){installEvt=null;render();});
+if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});}
 if(!versao&&!S.items.length&&!S.history.length)setStatus("loading");render();pull(true).then(function(){if(dirty)push();});
 })();
 
