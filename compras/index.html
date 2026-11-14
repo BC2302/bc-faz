@@ -47,7 +47,7 @@ h1 span{font-size:24px;margin-right:4px}
 .meta .bad{color:var(--warn);font-weight:700}
 .link{background:none;border:0;color:var(--accent);font-weight:700;padding:2px 0;font-size:13px}
 form.add{display:grid;grid-template-columns:1fr 64px;gap:8px}
-form.add .row2{grid-column:1/-1;display:grid;grid-template-columns:1fr 110px auto;gap:8px}
+form.add .row2{grid-column:1/-1;display:grid;grid-template-columns:1fr auto;gap:8px}
 .in{width:100%;border:1px solid var(--line);background:var(--bg);border-radius:10px;padding:11px 12px;font-size:16px;outline:none}
 .in:focus{border-color:var(--accent);background:var(--card)}
 select.in{padding:10px 8px}
@@ -59,7 +59,7 @@ select.in{padding:10px 8px}
 .gh{display:flex;justify-content:space-between;align-items:baseline;font-weight:800;font-size:14px;padding:0 4px 6px}
 .gh span{color:var(--muted);font-weight:700;font-size:13px}
 .list{background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);overflow:hidden}
-.item{display:grid;grid-template-columns:36px 1fr auto 28px;align-items:center;gap:8px;padding:10px 10px 10px 8px;border-top:1px solid var(--line)}
+.item{display:grid;grid-template-columns:34px 1fr 48px;align-items:center;gap:8px;padding:10px 12px 10px 8px;border-top:1px solid var(--line)}
 .item:first-child{border-top:0}
 .check{width:30px;height:30px;border-radius:50%;border:2px solid #c9cdc8;background:none;color:transparent;font-weight:900;font-size:15px;display:grid;place-items:center;padding:0}
 .done .check{background:var(--accent);border-color:var(--accent);color:#fff}
@@ -143,6 +143,15 @@ textarea.in{min-height:200px;font-size:14px;resize:vertical}
 .inst{border:0;background:var(--accent);color:#fff;font-weight:800;font-size:12px;padding:5px 10px;border-radius:99px;white-space:nowrap}
 .steps{margin:0;padding-left:20px;line-height:1.6}
 .steps li{margin-bottom:6px}
+.box{width:38px;height:38px;border-radius:9px;border:2.5px solid #b9beb8;background:var(--card);color:transparent;font-weight:900;font-size:22px;display:grid;place-items:center;padding:0;justify-self:end;transition:background .15s,border-color .15s}
+.done .box{background:var(--accent);border-color:var(--accent);color:#fff}
+.iname{cursor:pointer}
+.catb{font-size:20px!important;text-align:center}
+.item .del{font-size:12px;font-weight:700;padding:3px 6px;margin-left:6px}
+.done{background:var(--accent-2)}
+.prog{display:flex;justify-content:space-between;align-items:center;font-size:15px}
+.prog .ok{color:var(--accent);font-weight:800}
+.prog+.bar{margin-top:10px}
 .foot{font-size:12px;color:var(--muted);text-align:center;margin-top:22px}
 </style>
 </head>
@@ -278,7 +287,7 @@ function listText(){
   var items=S.items.filter(function(i){return !i.checked;});if(!items.length)items=S.items;
   var out=["🛒 *BC Compras — Lista*",""];
   CATS.forEach(function(c){var g=items.filter(function(i){return i.cat===c[0];});if(!g.length)return;out.push("*"+c[2]+" "+c[1]+"*");g.forEach(function(i){out.push("• "+(i.qty!==1?fqty(i.qty)+"x ":"")+i.name);});out.push("");});
-  var t=sum(items);if(t)out.push("Estimado: "+money(t));
+
   return out.join("\n").trim();
 }
 
@@ -301,19 +310,12 @@ function standalone(){try{return window.matchMedia("(display-mode: standalone)")
 function tab(id,label,badge){return '<button class="tab'+(view===id?" on":"")+'" data-act="tab" data-v="'+id+'">'+label+(badge!==""?'<small>'+badge+'</small>':"")+'</button>';}
 
 function vLista(){
-  var est=sum(S.items),cart=sum(S.items.filter(function(i){return i.checked;}));
   var n=S.items.length,done=S.items.filter(function(i){return i.checked;}).length;
   var h='';
-  h+='<div class="card"><div class="sum"><div><div class="lbl">Total estimado</div><div class="big">'+money(est)+'</div></div><div><div class="lbl">No carrinho</div><div class="big green">'+money(cart)+'</div></div></div>';
-  h+='<div class="bar"><i style="width:'+(n?Math.round(done/n*100):0)+'%"></i></div><div class="meta"><span><b>'+done+'</b> de <b>'+n+'</b> itens pegos</span></div>';
-  if(S.budget>0){
-    var over=est>S.budget,pct=Math.min(100,Math.round(est/S.budget*100));
-    h+='<div class="bar'+(over?" over":"")+'"><i style="width:'+pct+'%"></i></div><div class="meta"><span>Orçamento <b>'+money(S.budget)+'</b> · '+(over?'<span class="bad">passou '+money(est-S.budget)+'</span>':'restam <b>'+money(S.budget-est)+'</b>')+'</span><button class="link" data-act="budget">Alterar</button></div>';
-  }else h+='<div class="meta"><span>Sem orçamento definido</span><button class="link" data-act="budget">Definir orçamento</button></div>';
-  h+='</div>';
+  if(n)h+='<div class="card"><div class="prog"><span><b>'+done+'</b> de <b>'+n+'</b> itens concluídos</span>'+(done===n?'<span class="ok">Tudo pego! ✓</span>':'')+'</div><div class="bar"><i style="width:'+Math.round(done/n*100)+'%"></i></div></div>';
   var cats=CATS.map(function(c){return '<option value="'+c[0]+'"'+((draft.cat||"outros")===c[0]?" selected":"")+'>'+c[2]+" "+c[1]+'</option>';}).join("");
   var dl=Object.keys(S.catalog).map(function(k){return '<option value="'+esc(S.catalog[k].name)+'">';}).join("");
-  h+='<div class="card"><form class="add" id="addForm" autocomplete="off"><input class="in" id="fName" list="dlCat" placeholder="O que precisa comprar?" value="'+esc(draft.name)+'"><input class="in" id="fQty" inputmode="decimal" placeholder="Qtd" value="'+esc(draft.qty)+'" title="Quantidade"><div class="row2"><select class="in" id="fCat">'+cats+'</select><input class="in" id="fPrice" inputmode="decimal" placeholder="R$ preço" value="'+esc(draft.price)+'"><button class="btn" type="submit">Adicionar</button></div><datalist id="dlCat">'+dl+'</datalist></form></div>';
+  h+='<div class="card"><form class="add" id="addForm" autocomplete="off"><input class="in" id="fName" list="dlCat" placeholder="O que precisa comprar?" value="'+esc(draft.name)+'"><input class="in" id="fQty" inputmode="decimal" placeholder="Qtd" value="'+esc(draft.qty)+'" title="Quantidade"><div class="row2"><select class="in" id="fCat">'+cats+'</select><button class="btn" type="submit">Adicionar</button></div><datalist id="dlCat">'+dl+'</datalist></form></div>';
   if(!n){
     h+='<div class="empty"><div class="e">🧺</div><p>Sua lista está vazia. Toque para adicionar rápido:</p><div class="chips">'+SUGGEST.map(function(s){return '<button class="chip" data-act="quick" data-n="'+esc(s[0])+'" data-c="'+s[1]+'">+ '+esc(s[0])+'</button>';}).join("")+'</div></div>';
     return h;
@@ -321,19 +323,14 @@ function vLista(){
   CATS.forEach(function(c){
     var g=S.items.filter(function(i){return i.cat===c[0];});if(!g.length)return;
     g.sort(function(a,b){return (a.checked-b.checked)||a.name.localeCompare(b.name,"pt-BR");});
-    h+='<div class="group"><div class="gh">'+c[2]+" "+c[1]+'<span>'+money(sum(g))+'</span></div><div class="list">'+g.map(row).join("")+'</div></div>';
+    var gd=g.filter(function(i){return i.checked;}).length;
+    h+='<div class="group"><div class="gh">'+c[2]+" "+c[1]+'<span>'+gd+'/'+g.length+'</span></div><div class="list">'+g.map(row).join("")+'</div></div>';
   });
-  h+='<div class="foot">Toque no círculo quando pegar o item. Preencha o preço na prateleira para ver o total real.</div>';
+  h+='<div class="foot">Marque a caixa quando pegar o item.</div>';
   return h;
 }
 function row(i){
-  var c=S.catalog[norm(i.name)],hint="";
-  if(c&&c.price&&c.count){
-    if(!i.price)hint='<span class="hint eq">última vez '+money(c.price)+'</span>';
-    else if(i.price>c.price+0.004)hint='<span class="hint up">▲ era '+money(c.price)+'</span>';
-    else if(i.price<c.price-0.004)hint='<span class="hint down">▼ era '+money(c.price)+'</span>';
-  }
-  return '<div class="item'+(i.checked?" done":"")+'"><button class="check" data-act="toggle" data-id="'+i.id+'" aria-label="Marcar">✓</button><div><div class="iname">'+esc(i.name)+'</div><div class="iline"><button class="catb" data-act="cat" data-id="'+i.id+'" title="Mudar categoria">'+CAT[i.cat].em+'</button><input class="qty" id="q_'+i.id+'" data-f="qty" data-id="'+i.id+'" inputmode="decimal" value="'+fqty(i.qty)+'" aria-label="Quantidade"><span>×</span><input class="price" id="p_'+i.id+'" data-f="price" data-id="'+i.id+'" inputmode="decimal" placeholder="R$ 0,00" value="'+fnum(i.price)+'" aria-label="Preço">'+hint+'</div></div><div class="subt">'+(i.price?money(sub(i)):"—")+'</div><button class="del" data-act="del" data-id="'+i.id+'" aria-label="Remover">×</button></div>';
+  return '<div class="item'+(i.checked?" done":"")+'"><button class="catb" data-act="cat" data-id="'+i.id+'" title="Mudar categoria">'+CAT[i.cat].em+'</button><div><div class="iname" data-act="toggle" data-id="'+i.id+'">'+esc(i.name)+'</div><div class="iline"><span>Qtd</span><input class="qty" id="q_'+i.id+'" data-f="qty" data-id="'+i.id+'" inputmode="decimal" value="'+fqty(i.qty)+'" aria-label="Quantidade"><button class="del" data-act="del" data-id="'+i.id+'" aria-label="Remover">Remover</button></div></div><button class="box" role="checkbox" aria-checked="'+(i.checked?"true":"false")+'" data-act="toggle" data-id="'+i.id+'" aria-label="Concluído">✓</button></div>';
 }
 function actionBar(){
   var done=S.items.filter(function(i){return i.checked;}).length;
@@ -343,28 +340,25 @@ function actionBar(){
 function vFreq(){
   var keys=Object.keys(S.catalog);
   var h='<div class="search"><input class="in" id="fSearch" placeholder="Buscar item…" value="'+esc(q)+'"></div>';
-  if(!keys.length)return h+'<div class="empty"><div class="e">⭐</div><p>Tudo o que você adicionar à lista fica guardado aqui, com o último preço pago. Depois é só tocar para pôr de novo na lista.</p></div>';
+  if(!keys.length)return h+'<div class="empty"><div class="e">⭐</div><p>Tudo o que você adicionar à lista fica guardado aqui. Depois é só tocar para pôr de novo na lista.</p></div>';
   var nq=norm(q);
   var arr=keys.map(function(k){return Object.assign({k:k},S.catalog[k]);}).filter(function(c){return !nq||c.k.indexOf(nq)>-1;});
   arr.sort(function(a,b){return (b.count||0)-(a.count||0)||a.name.localeCompare(b.name,"pt-BR");});
   var inList={};S.items.forEach(function(i){if(!i.checked)inList[norm(i.name)]=1;});
   h+='<div class="list" style="margin-top:12px">'+(arr.length?arr.map(function(c){
-    var s=[];if(c.count)s.push("comprado "+c.count+"x");if(c.price)s.push("último "+money(c.price));if(c.last)s.push(new Date(c.last+"T12:00").toLocaleDateString("pt-BR",{day:"2-digit",month:"2-digit"}));
+    var s=[];if(c.count)s.push("comprado "+c.count+"x");if(c.last)s.push(new Date(c.last+"T12:00").toLocaleDateString("pt-BR",{day:"2-digit",month:"2-digit"}));
     return '<div class="freq"><div class="em">'+(CAT[c.cat]||CAT.outros).em+'</div><div><div class="n">'+esc(c.name)+'</div><div class="s">'+(s.join(" · ")||"ainda não comprado")+'</div></div><div style="display:flex;gap:4px;align-items:center">'+(inList[c.k]?'<span class="mini on">Na lista ✓</span>':'<button class="mini" data-act="fadd" data-k="'+esc(c.k)+'">+ Lista</button>')+'<button class="del" data-act="fdel" data-k="'+esc(c.k)+'" aria-label="Esquecer item">×</button></div></div>';
   }).join(""):'<div class="empty"><p>Nada encontrado.</p></div>')+'</div>';
   return h;
 }
 
 function vHist(){
-  if(!S.history.length)return '<div class="empty" style="padding-top:40px"><div class="e">🧾</div><p>Quando terminar uma compra, toque em <b>Finalizar</b> na lista. Ela fica registrada aqui com data, mercado e total.</p></div>';
-  var byM={};S.history.forEach(function(p){var m=p.date.slice(0,7);byM[m]=(byM[m]||0)+p.total;});
-  var now=new Date(),months=[];for(var i=5;i>=0;i--){var d=new Date(now.getFullYear(),now.getMonth()-i,1);months.push(d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0"));}
-  var cur=months[5],prev=months[4],max=Math.max.apply(null,months.map(function(m){return byM[m]||0;}).concat([1]));
-  var avg=S.history.reduce(function(t,p){return t+p.total;},0)/S.history.length;
-  var h='<div class="card"><div class="stats"><div><div class="lbl">Este mês</div><div class="big green">'+money(byM[cur])+'</div></div><div><div class="lbl">Mês passado</div><div class="big">'+money(byM[prev])+'</div></div><div><div class="lbl">Média/compra</div><div class="big">'+money(avg)+'</div></div></div>';
-  h+='<div class="chart">'+months.map(function(m){var v=byM[m]||0,d=new Date(m+"-15T12:00");return '<div class="col'+(m===cur?" cur":"")+'"><div class="v">'+(v?money(v).replace(/,\d\d$/,""):"")+'</div><div class="b" style="height:'+Math.round(v/max*85)+'%"></div><div class="m">'+d.toLocaleDateString("pt-BR",{month:"short"}).replace(".","")+'</div></div>';}).join("")+'</div></div>';
+  if(!S.history.length)return '<div class="empty" style="padding-top:40px"><div class="e">🧾</div><p>Quando terminar uma compra, toque em <b>Finalizar</b> na lista. Ela fica registrada aqui com a data, o mercado e os itens.</p></div>';
+  var cur=today().slice(0,7),nC=0,nI=0;
+  S.history.forEach(function(p){if(p.date.slice(0,7)===cur){nC++;nI+=p.items.length;}});
+  var h='<div class="card"><div class="sum"><div><div class="lbl">Compras este mês</div><div class="big green">'+nC+'</div></div><div><div class="lbl">Itens este mês</div><div class="big">'+nI+'</div></div></div></div>';
   h+='<div class="list" style="margin-top:14px">'+S.history.map(function(p){
-    return '<details class="buy" data-id="'+p.id+'"><summary><div><div class="d">'+esc(fdate(p.date))+'</div><div class="st">'+(p.store?esc(p.store)+" · ":"")+p.items.length+(p.items.length===1?' item':' itens')+'</div></div><div class="t">'+money(p.total)+'</div></summary><div class="bitems">'+p.items.map(function(i){return '<div><span>'+(i.qty!==1?fqty(i.qty)+"x ":"")+esc(i.name)+'</span><span>'+(i.price?money(sub(i)):"—")+'</span></div>';}).join("")+'<div class="bact"><button class="btn ghost" data-act="repeat" data-id="'+p.id+'">↺ Repetir na lista</button><button class="btn ghost" data-act="hdel" data-id="'+p.id+'">Excluir</button></div></div></details>';
+    return '<details class="buy" data-id="'+p.id+'"><summary><div><div class="d">'+esc(fdate(p.date))+'</div><div class="st">'+(p.store?esc(p.store):"Mercado não informado")+'</div></div><div class="t">'+p.items.length+(p.items.length===1?' item':' itens')+'</div></summary><div class="bitems">'+p.items.map(function(i){return '<div><span>'+esc(i.name)+'</span><span>'+(i.qty!==1?fqty(i.qty)+"x":"")+'</span></div>';}).join("")+'<div class="bact"><button class="btn ghost" data-act="repeat" data-id="'+p.id+'">↺ Repetir na lista</button><button class="btn ghost" data-act="hdel" data-id="'+p.id+'">Excluir</button></div></div></details>';
   }).join("")+'</div>';
   return h;
 }
@@ -377,7 +371,7 @@ function toast(t){var old=document.querySelector(".toast");if(old)old.remove();v
 function mFinish(){
   var bought=S.items.filter(function(i){return i.checked;}),left=S.items.length-bought.length,noPrice=bought.filter(function(i){return !i.price;}).length;
   var stores={};S.history.forEach(function(p){if(p.store)stores[p.store]=1;});
-  modal('<h2>Finalizar compra</h2><p>'+bought.length+' itens no carrinho · <b>'+money(sum(bought))+'</b>'+(noPrice?'<br>'+noPrice+' item(ns) sem preço — pode preencher antes, se quiser.':'')+(left?'<br>Os '+left+' itens não marcados continuam na lista.':'')+'</p><label>Mercado</label><input class="in" id="mStore" list="dlStores" placeholder="Ex.: Mercadinho do Centro" value="'+esc(S.lastStore)+'"><datalist id="dlStores">'+Object.keys(stores).map(function(s){return '<option value="'+esc(s)+'">';}).join("")+'</datalist><label>Data</label><input class="in" id="mDate" type="date" value="'+today()+'"><div class="btns"><button class="btn ghost" data-act="mclose">Voltar</button><button class="btn" data-act="mfinish">Salvar compra</button></div>');
+  modal('<h2>Finalizar compra</h2><p>'+bought.length+(bought.length===1?' item marcado':' itens marcados')+(left?'<br>Os '+left+' itens não marcados continuam na lista.':'')+'</p><label>Mercado</label><input class="in" id="mStore" list="dlStores" placeholder="Ex.: Mercadinho do Centro" value="'+esc(S.lastStore)+'"><datalist id="dlStores">'+Object.keys(stores).map(function(s){return '<option value="'+esc(s)+'">';}).join("")+'</datalist><label>Data</label><input class="in" id="mDate" type="date" value="'+today()+'"><div class="btns"><button class="btn ghost" data-act="mclose">Voltar</button><button class="btn" data-act="mfinish">Salvar compra</button></div>');
 }
 function mBudget(){modal('<h2>Orçamento da compra</h2><p>Quanto você quer gastar nesta ida ao mercado? O app avisa se a lista passar disso.</p><label>Valor (R$)</label><input class="in" id="mBudget" inputmode="decimal" placeholder="Ex.: 300" value="'+fnum(S.budget)+'"><div class="btns"><button class="btn ghost" data-act="mbudget0">Sem orçamento</button><button class="btn" data-act="mbudget">Salvar</button></div>');}
 function mCat(id){var it=S.items.find(function(i){return i.id===id;});if(!it)return;modal('<h2>Categoria</h2><p>'+esc(it.name)+'</p><div class="catgrid">'+CATS.map(function(c){return '<button class="'+(it.cat===c[0]?"on":"")+'" data-act="setcat" data-id="'+id+'" data-c="'+c[0]+'">'+c[2]+" "+c[1]+'</button>';}).join("")+'</div><div class="btns"><button class="btn ghost" data-act="mclose">Fechar</button></div>');}
@@ -431,7 +425,7 @@ document.addEventListener("submit",function(e){
 });
 document.addEventListener("input",function(e){
   var el=e.target;
-  if(el.id==="fName"){draft.name=el.value;var c=S.catalog[norm(el.value)];if(c){draft.cat=c.cat;if(c.price&&!draft.price){draft.price=fnum(c.price);document.getElementById("fPrice").value=draft.price;}}else if(!draft.catTouched&&el.value.trim())draft.cat=guess(el.value);document.getElementById("fCat").value=draft.cat||"outros";}
+  if(el.id==="fName"){draft.name=el.value;var c=S.catalog[norm(el.value)];if(c){draft.cat=c.cat;}else if(!draft.catTouched&&el.value.trim())draft.cat=guess(el.value);document.getElementById("fCat").value=draft.cat||"outros";}
   else if(el.id==="fQty")draft.qty=el.value;
   else if(el.id==="fPrice")draft.price=el.value;
   else if(el.id==="fSearch"){q=el.value;render();}
