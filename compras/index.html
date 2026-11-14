@@ -6,10 +6,10 @@
 <meta name="theme-color" content="#1f8a4c">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="Compras">
+<meta name="apple-mobile-web-app-title" content="BC Compras">
 <meta name="robots" content="noindex">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ctext y=%22.9em%22 font-size=%2290%22%3E🛒%3C/text%3E%3C/svg%3E">
-<title>Compras do Supermercado</title>
+<title>BC Compras</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap">
 <style id="css">
 :root{--bg:#f5f4ee;--card:#fff;--ink:#1d2321;--muted:#6b7470;--line:#e6e4dc;--accent:#1f8a4c;--accent-2:#e7f4ec;--warn:#c4441c;--warn-2:#fbebe5;--amber:#b7791f;--r:14px;--shadow:0 1px 2px rgba(0,0,0,.04),0 4px 14px rgba(0,0,0,.05)}
@@ -242,7 +242,7 @@ function pill(){
   return '<span id="pill" class="pill '+m[1]+'">'+m[0]+'</span>';
 }
 function vLogin(){
-  return '<div class="wrap"><div class="login"><div class="e">🛒</div><h1>Minhas Compras</h1><p>Digite o PIN para abrir a lista.</p><form id="loginForm" autocomplete="off"><input class="in pin" id="fPin" type="password" inputmode="numeric" placeholder="PIN" autofocus><button class="btn" type="submit"'+(loginBusy?" disabled":"")+'>'+(loginBusy?"Abrindo…":"Entrar")+'</button></form>'+(loginErr?'<div class="lerr">'+esc(loginErr)+'</div>':'')+'</div></div>';
+  return '<div class="wrap"><div class="login"><div class="e">🛒</div><h1>BC Compras</h1><p>Digite o PIN para abrir a lista.</p><form id="loginForm" autocomplete="off"><input class="in pin" id="fPin" type="password" inputmode="numeric" placeholder="PIN" autofocus><button class="btn" type="submit"'+(loginBusy?" disabled":"")+'>'+(loginBusy?"Abrindo…":"Entrar")+'</button></form>'+(loginErr?'<div class="lerr">'+esc(loginErr)+'</div>':'')+'</div></div>';
 }
 function mConfig(){
   modal('<h2>Configurações</h2><label>Trocar PIN</label><input class="in" id="mPinOld" type="password" inputmode="numeric" placeholder="PIN atual"><input class="in" id="mPinNew" type="password" inputmode="numeric" placeholder="Novo PIN (mínimo 4 números)" style="margin-top:8px"><div class="btns"><button class="btn" data-act="mpin">Salvar novo PIN</button></div><label style="margin-top:22px">Este aparelho</label><div class="btns" style="margin-top:4px"><button class="btn ghost" data-act="mlogout">Sair deste aparelho</button><button class="btn ghost" data-act="mclose">Fechar</button></div>');
@@ -271,7 +271,7 @@ function finish(store,date){
 }
 function listText(){
   var items=S.items.filter(function(i){return !i.checked;});if(!items.length)items=S.items;
-  var out=["🛒 *Lista de compras*",""];
+  var out=["🛒 *BC Compras — Lista*",""];
   CATS.forEach(function(c){var g=items.filter(function(i){return i.cat===c[0];});if(!g.length)return;out.push("*"+c[2]+" "+c[1]+"*");g.forEach(function(i){out.push("• "+(i.qty!==1?fqty(i.qty)+"x ":"")+i.name);});out.push("");});
   var t=sum(items);if(t)out.push("Estimado: "+money(t));
   return out.join("\n").trim();
@@ -283,7 +283,7 @@ function render(){
   var a=document.activeElement,fid=a&&a.id,s1=null,s2=null;try{if(fid){s1=a.selectionStart;s2=a.selectionEnd;}}catch(e){}
   var open=[].map.call(document.querySelectorAll("details.buy[open]"),function(d){return d.dataset.id;});
   var pend=S.items.filter(function(i){return !i.checked;}).length;
-  var html='<div class="wrap"><header><div class="top"><h1><span>🛒</span>Minhas Compras</h1><div style="display:flex;gap:6px;align-items:center">'+pill()+'</div></div><nav class="tabs">'+
+  var html='<div class="wrap"><header><div class="top"><h1><span>🛒</span>BC Compras</h1><div style="display:flex;gap:6px;align-items:center">'+pill()+'</div></div><nav class="tabs">'+
     tab("lista","Lista",S.items.length?pend+"/"+S.items.length:"")+tab("frequentes","Frequentes","")+tab("historico","Histórico",S.history.length||"")+'</nav></header>';
   html+=view==="lista"?vLista():view==="frequentes"?vFreq():vHist();
   html+='</div>';
