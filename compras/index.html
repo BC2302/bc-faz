@@ -165,7 +165,7 @@ var SB_URL="https://cisbjxkakojdchmaixce.supabase.co/rest/v1/rpc/";
 var SB_KEY="sb_publishable_-VaYd7JIksNcKA0hte3flw_bJb6KGNn";
 var LISTA="principal";
 var LS="compras-supermercado-v2";
-var S=fill(null),versao=0,dirty=false,pin="",authed=false,loginErr="",loginBusy=false;
+var S=fill(null),versao=0,dirty=false,pin="",authed=true,loginErr="",loginBusy=false;
 try{var c0=JSON.parse(localStorage.getItem(LS)||"null");if(c0){S=fill(c0.S);versao=c0.versao||0;dirty=!!c0.dirty;pin=c0.pin||"";}}catch(e){}
 function fill(o){o=o||{};return{items:o.items||[],catalog:o.catalog||{},history:o.history||[],budget:+o.budget||0,lastStore:o.lastStore||""};}
 function cache(){try{localStorage.setItem(LS,JSON.stringify({S:S,versao:versao,dirty:dirty,pin:pin}));}catch(e){}}
@@ -218,7 +218,7 @@ function pull(force){
         if(!force&&(modalOpen||(a&&a.closest&&a.closest(".item"))))return;
         S=fill(r.estado);versao=r.versao;cache();render();
       }
-      if(status==="offline"||status==="error")setStatus(dirty?"pending":"saved");
+      if(status==="offline"||status==="error"||status==="loading")setStatus(dirty?"pending":"saved");
     }else if(r.erro==="pin"||r.erro==="bloqueado")logout(r.erro==="pin"?"O PIN foi trocado. Digite o novo PIN.":"Muitas tentativas. Espere 10 minutos.");
   },function(){setStatus(dirty?"offline":"offline");});
 }
@@ -238,7 +238,7 @@ function login(p){
 function logout(msg){authed=false;pin="";dirty=false;S=fill(null);versao=0;loginErr=msg||"";try{localStorage.removeItem(LS);}catch(e){}closeModal();render();}
 function setStatus(s){status=s;var el=document.getElementById("pill");if(el)el.outerHTML=pill();}
 function pill(){
-  var m={saved:["Salvo ✓",""],pending:["Alterações…",""],saving:["Salvando…",""],offline:["Sem internet · guardado aqui","local"],error:["Erro ao salvar","err"]}[status]||["",""];
+  var m={loading:["Carregando…",""],saved:["Salvo ✓",""],pending:["Alterações…",""],saving:["Salvando…",""],offline:["Sem internet · guardado aqui","local"],error:["Erro ao salvar","err"]}[status]||["",""];
   return '<span id="pill" class="pill '+m[1]+'">'+m[0]+'</span>';
 }
 function vLogin(){
@@ -283,7 +283,7 @@ function render(){
   var a=document.activeElement,fid=a&&a.id,s1=null,s2=null;try{if(fid){s1=a.selectionStart;s2=a.selectionEnd;}}catch(e){}
   var open=[].map.call(document.querySelectorAll("details.buy[open]"),function(d){return d.dataset.id;});
   var pend=S.items.filter(function(i){return !i.checked;}).length;
-  var html='<div class="wrap"><header><div class="top"><h1><span>🛒</span>Minhas Compras</h1><div style="display:flex;gap:6px;align-items:center">'+pill()+'<button class="gear" data-act="config" aria-label="Configurações">⚙️</button></div></div><nav class="tabs">'+
+  var html='<div class="wrap"><header><div class="top"><h1><span>🛒</span>Minhas Compras</h1><div style="display:flex;gap:6px;align-items:center">'+pill()+'</div></div><nav class="tabs">'+
     tab("lista","Lista",S.items.length?pend+"/"+S.items.length:"")+tab("frequentes","Frequentes","")+tab("historico","Histórico",S.history.length||"")+'</nav></header>';
   html+=view==="lista"?vLista():view==="frequentes"?vFreq():vHist();
   html+='</div>';
@@ -435,7 +435,7 @@ document.addEventListener("keydown",function(e){
   if(e.key==="Enter"&&modalOpen&&e.target.id==="mBudget"){document.querySelector('[data-act="mbudget"]').click();}
 });
 
-if(pin){authed=true;render();pull(true).then(function(){if(dirty)push();});}else render();
+if(!versao&&!S.items.length&&!S.history.length)setStatus("loading");render();pull(true).then(function(){if(dirty)push();});
 })();
 
 </script>
